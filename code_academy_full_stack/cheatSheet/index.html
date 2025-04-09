@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML and CSS Cheatsheet</title>
+  <link href="./styles.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <!-- Intro -->
+    <div class="fixed-positioning">
+        <a href="#home" class="nav-heading">HTML and CSS Cheatsheet</a>
+        <div class="nav-section">Positioning Approaches</div>
+        <div class="nav-choices">
+            <a href="#positioning-static" class="nav-element">Static</a>
+            <a href="#positioning-relative" class="nav-element">Relative</a>
+            <a href="#positioning-absolute" class="nav-element">Absolute</a>
+            <a href="#positioning-fixed" class="nav-element">Fixed</a>
+            <a href="#positioning-sticky" class="nav-element">Sticky</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <!-- HTML Topics -->
+        <h1 id="home">HTML</h1>
+        <p>More to follow</p>
+        
+        <!-- CSS Topics -->
+        <h1>CSS</h1>
+        <h2>Layout</h2>
+        <h3>Positioning</h3>
+        <p>This section will cover the five main ways for how to position elements using CSS within a webpage and demonstrate how these are used and what they look like.</p>
+        <h4 id="positioning-static">Approach 1: Static</h4>
+        <p>This is the default positioning for every element and is applied by using the <code>position</code> argument within a CSS element as illustrated below.  Elements will appear within the normal "flow" of the HTML document.</p>
+        <pre><code>.static-positioning {
+            position: static;
+        }</code></pre>
+        <h4 id="positioning-relative">Approach 2: Relative</h4>
+        Relative positioning maintains elements within the "flow" of the HTML document, but allows you to shift them based on the <code>left</code>, <code>right</code>, <code>top</code>, and <code>bottom</code> properties.
+        <pre><code>.relative-positioning {
+            position: relative;
+            left: 5%;
+            width: 95%;
+        }</code></pre>
+        <h5>Relative Positioning Example</h5>
+        <p class="relative-positioning">This is an example of the above relative positioning styling applied to a paragraph, which results in it being "pushed in" from the left by 10%.  Please note that we adjusted the <code>width</code> parameter to avoid "overflowing" the viewport.</p>
+        <h4 id="positioning-absolute">Approach 3: Absolute</h4>
+        <p>Absolute positioning removes documents from the normal document flow.  Instead, you specify the distance that the element should be from it's ancestor's sides</p>
+        <p>This "ancestor" is also referred to as the <b>positioning contexts</b> and it's <b>initial containing block</b>.  By default, the <b>initial containing block</b> is the initial viewport.  You can change this default behavior by setting positioning on one of the element's ancestors</p>
+        <pre><code>.absoltue-positioning {
+            position: absolute;
+            left: 20%;
+            background-color: yellowgreen;
+        }</code></pre>
+        <div style="position: relative;">
+            <div class="absolute-positioning">Absolutely positioned element</div><!-- Pick up by ading explanataion and sample code -->
+            <div style="background-color: aqua;">Base element</div>
+        </div>
+        <h4 id="positioning-fixed">Approach 4: Fixed</h4>
+        <p>Fixed positioning is very straight forward: It ensures that an element stays at the same position regardless of scrolling.  This is very useful for things like navigation headings, and the code below was used to create this page's navigation heading.</p>
+        <pre><code>.fixed-positioning {
+            position: fixed;
+            top: 0;
+            color: white;
+            background-color: black;
+        }</code></pre>
+        <h4 id="positioning-sticky">Approach 5: Sticky</h4>
+        <p>This header is used so that you can make an element "stick" to a certain point on the screen after you scroll down by some amount.  For instance, if you have an element that starts two thirds down the page but you want to always stay 50px from the top of the screen, you would use sticky positioning to achieve this effect.</p>
+        <p>You can achieve this through the following code, which we applied to this page to ensure that the various levels of headings provide users with conceptual "breadcrumbs" to show how what they are seeing on the screen fits into the larger context of technologies and concepts</p>
+        
+<pre><code>h1 {
+    position: sticky;
+    top: 75px;
+    margin: 2px 0em;
+}
+h2 {
+    position: sticky;
+    top: 114px;  /* offset calculation: top (75px) + h1 element (37) + first half h2 element margin (2) */
+    margin: 2px 0em;
+}
+h3 {
+    position: sticky;
+    top: 143px;  /* previous + h2 element (27px) +  second half h2 element margin (2px) + first half h3 element margin (2px) */
+    margin: 2px 0em;
+}
+h4 {
+    position: sticky;
+    top: 167px; /* previous + h3 element (22px) +  second half h3 element margin (2px) + first half h4 element margin (2px) */
+    margin: 2px 0em;
+}</code></pre>
+
+    </div>
+    <!-- <p>This is a cheatsheet that I will slowly build out that covers important elements of CSS and HTML formatting that I struggle with.</p> -->
+</body>
+</html>

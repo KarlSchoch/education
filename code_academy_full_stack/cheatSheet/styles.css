@@ -1,0 +1,87 @@
+/* * {
+    outline: 1px solid red;
+} */
+
+pre {
+    background-color: #f4f4f4;
+}
+code {
+    font-family: Consolas, monospace;
+    background-color: #f4f4f4;
+    padding: 0.2em;
+}
+
+/* Nav Bar */
+.nav-heading {
+    color: white;
+    font-size: large;
+}
+.nav-choices {
+    display: flex;
+    padding: 0em 0.2em;
+}
+.nav-element {
+    margin: 0em;
+    padding: 0.2em 1em;
+    color: white;
+    font-size: small;
+}
+.nav-section {
+    margin: 0em;
+    padding: 0.2em 0.5em;
+    font-size: medium;
+}
+
+/* Main Content */
+.main-content {
+    margin-top: 75px;
+}
+h1 {
+    scroll-margin-top: 75px;
+    position: sticky;
+    top: 75px;
+    margin: 2px 0em;
+    background-color: #444;
+    z-index: 10;
+}
+h2 {
+    position: sticky;
+    top: 114px;  /* offset calculation: top (75px) + h1 element (37) + first half h2 element margin (2) */
+    margin: 2px 0em;
+    background-color: #555;
+    z-index: 10;
+}
+h3 {
+    position: sticky;
+    top: 143px;  /* previous + h2 element (27px) +  second half h2 element margin (2px) + first half h3 element margin (2px) */
+    margin: 2px 0em;
+    background-color: #666;
+    z-index: 10;
+}
+h4 {
+    scroll-margin-top: 172px;
+    position: sticky;
+    top: 167px; /* previous + h3 element (22px) +  second half h3 element margin (2px) + first half h4 element margin (2px) */
+    margin: 2px 0em;
+    background-color: #777;
+    z-index: 10;
+}
+
+/* Positioning Demo Classes */
+.relative-positioning {
+    position: relative;
+    left: 5%;
+    width: 95%;
+}
+.absolute-positioning {
+    position: absolute;
+    left: 20%;
+    background-color: yellowgreen;
+}
+.fixed-positioning {
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    color: white;
+    background-color: black;
+}

@@ -1,0 +1,94 @@
+* {
+    font-family: Merriweather; /* Set a default font for the entire document */
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0076A8; /* River Blue for the main title */
+}
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #4E5D6C; /* Slate Gray for section titles */
+}
+p {
+    font-family: Open Sans, sans-serif; /* Use Open Sans for paragraph text */
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #4E5D6C;
+}
+
+
+.section-box {
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+/* Styling for color section */
+.color-boxes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+    gap: .1em;
+    text-align: center;
+}
+.color-box {
+    padding: 0em 3em;
+}
+#river-blue {
+    background-color: #0076A8; /* River Blue */
+    color: white;
+}
+#flag-red {
+    background-color: #C8102E; /* Flag Red */
+    color: white;
+}
+#slate-white {
+    background-color: #FFFFFF; /* State White */
+    color: black;
+}
+#forest-green {
+    background-color: #228B22; /* Forest Green */
+    color: white;
+}
+#gold-wheat {
+    background-color: #D4AF37; /* Gold Wheat */
+    color: white;
+}
+#slate-gray {
+    background-color: #4E5D6C; /* Slate Gray */
+    color: white;
+}
+
+/* Styling for the font section */
+.font-boxes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .1em;
+}
+#open-sans .regular {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+#open-sans .bold {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+}
+#open-sans .italic {
+    font-family: 'Open Sans', sans-serif;
+    font-style: italic;
+}
+#merriweather .regular {
+    font-family: 'Merriweather', serif;
+    font-weight: 400;
+}
+#merriweather .bold {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+}
+#merriweather .italic {
+    font-family: 'Merriweather', serif;
+    font-style: italic;
+}
