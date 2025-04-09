@@ -3,15 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Project</title>
+    <title>Tea Cozy</title>
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to the Website Project</h1>
-    </header>
-    <main>
-        <p>This is the main content area.</p>
+    <!-- Structure Notes -->
+    <!--  
+        Menu Bar: 
+            Fixed to the top, probably a frid with two columns with two flexbox displays
+            First Section, aligned all the way to the left, includes the "Tea Cozy" logo.
+            Second Section that contains a three item unordered list, aligned all the way to the right
+        Mission:
+            1200 x 700 image as a background
+            Mission statement is a flex container where the align-items is vertical
+            Black background and white text, aligned vertically 
+        Tea of the Month
+            1000px container that contains two rows
+            First row is the headline
+            Second row is the images of the teas (200 x 300px with 10px between the description and the image)
+        Locations
+            500px height with background image
+            Three 300px squares that are wrapped in a flex container
+        Contact
+            200px height
+    -->
+    <!-- <header>
+    </header> -->
+    <main class="main-content">
+        <!-- Menu Bar -->
+        <div class="menu-bar-container">
+            <div class="menu-bar-logo">Image</div>
+            <div class="menu-bar-links">
+                <ul>
+                    <li>Home</li>
+                    <li>About</li>
+                    <li>Contact</li>
+                </ul>
+            </div>
+        </div>
+        <div>Mission</div>
+        <div>Tea of the Month</div>
+        <div>Locations</div>
+        <div>Contact</div>
     </main>
     <footer>
         <p>&copy; 2023 Website Project</p>

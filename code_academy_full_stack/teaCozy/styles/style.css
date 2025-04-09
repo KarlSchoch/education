@@ -1,3 +1,20 @@
+.main-content {
+    display: grid;
+}
+.menu-bar-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.menu-bar-logo {
+    display: flex;
+    justify-content: row;
+}
+.menu-bar-links {
+    display: flex;
+    justify-content: end;
+}
+
+/* Boilerplate generated */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
