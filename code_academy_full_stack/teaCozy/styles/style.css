@@ -1,6 +1,12 @@
 .main-content {
     display: grid;
 }
+* {
+    background-color: black;
+    color: seashell;
+}
+
+/* Menu Bar Related Styling */
 .menu-bar-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -9,12 +15,53 @@
     display: flex;
     justify-content: row;
 }
-.menu-bar-links {
-    display: flex;
+.menu-bar-link-container {
+    display: inline-flex;
     justify-content: end;
 }
+.menu-bar-links {
+    padding: 0px 2px;
+}
 
-/* Boilerplate generated */
+/* Mission */
+.mission-container {
+    display: flex;
+    justify-content: center;
+}
+.mission-statement {
+    display: flex;
+    background-image: url('../static/images/img-mission-background.jpg');
+    height: 700px;
+    width: 1200px;
+    background-size: cover;
+    background-position: center;
+    align-items: center;
+    justify-content: center;
+}
+.mission-statement-text {
+    background-color: black;
+    text-align: center;
+    width: 1200px;
+}
+/* Tea of the Month Related Styling */
+.tea-of-the-month-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.tea-of-the-month-tile-container {
+    width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.tea-of-the-month-tile-image {
+    height: 200px;
+    width: 300px;
+}
+
+/* Boilerplate Generated */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -53,11 +100,11 @@ nav a:hover {
 }
 
 footer {
-    background: #35424a;
+    /* background: #35424a;
     color: #ffffff;
     text-align: center;
     padding: 10px 0;
     position: relative;
     bottom: 0;
-    width: 100%;
+    width: 100%; */
 }
