@@ -10,6 +10,7 @@
 .menu-bar-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    height: 69px;
 }
 .menu-bar-logo {
     display: flex;
@@ -20,7 +21,11 @@
     justify-content: end;
 }
 .menu-bar-links {
-    padding: 0px 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px;
+    text-decoration: underline;
 }
 
 /* Mission */
@@ -54,11 +59,55 @@
     width: 1000px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 10px;
 }
 .tea-of-the-month-tile-image {
     height: 200px;
     width: 300px;
+}
+
+/* Locations Related Styling */
+.locations-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.locations {
+    display: flex;
+    background-image: url('../static/images/img-locations-background.jpg');
+    height: 500px;
+    width: 1200px;
+    background-size: cover;
+    background-position: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.locations-tile-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: transparent;
+    gap: 40px;
+    text-align: center;
+}
+.locations-tile {
+    width: 300px;
+    opacity: 1;
+}
+.locations h2 {
+    background-color: transparent;
+}
+/* Contact Section Related Styling */
+.contact-container {
+    height: 200px;
+    text-align: center;
+}
+/* Footer Related Styling */
+.footer {
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 /* Boilerplate Generated */
