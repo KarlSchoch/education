@@ -8,17 +8,27 @@
 
 /* Menu Bar Related Styling */
 .menu-bar-container {
+    position: fixed;
+    top: 0;
+    width: 100vw;
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 69px;
+    border-bottom: 1px solid seashell;
 }
 .menu-bar-logo {
     display: flex;
     justify-content: row;
+    padding-left: 10px;
+    align-items: center;
+}
+.tea-cozy-logo {
+    height: 50px;
 }
 .menu-bar-link-container {
     display: inline-flex;
     justify-content: end;
+    padding-right: 20px;
 }
 .menu-bar-links {
     display: flex;
@@ -30,6 +40,7 @@
 
 /* Mission */
 .mission-container {
+    margin-top: 70px;
     display: flex;
     justify-content: center;
 }
@@ -48,23 +59,32 @@
     text-align: center;
     width: 1200px;
 }
+
 /* Tea of the Month Related Styling */
 .tea-of-the-month-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-bottom: 20px;
 }
+/* .tea-of-the-month-container h2 {
+    margin: 10px 0px
+}; */
 .tea-of-the-month-tile-container {
     width: 1000px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    text-align: center;
+    gap: 20px;
 }
 .tea-of-the-month-tile-image {
     height: 200px;
     width: 300px;
+}
+.tea-of-the-month-tile-container h5 {
+    margin: 10px 0px 0px;
 }
 
 /* Locations Related Styling */
@@ -72,12 +92,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* flex-shrink: 1; */
 }
 .locations {
     display: flex;
     background-image: url('../static/images/img-locations-background.jpg');
-    height: 500px;
-    width: 1200px;
+    /* height: 500px; */
+    width: 90vw;
+    max-width: 1200px;
+    /* flex-shrink: 1; */
     background-size: cover;
     background-position: center;
     flex-direction: column;
@@ -87,12 +110,16 @@
 .locations-tile-container {
     display: flex;
     flex-wrap: wrap;
+    flex-shrink: 2;
     background-color: transparent;
+    align-items: center;
+    justify-content: center;
     gap: 40px;
     text-align: center;
 }
 .locations-tile {
-    width: 300px;
+    max-width: 300px;
+    min-width: 300px;
     opacity: 1;
 }
 .locations h2 {
