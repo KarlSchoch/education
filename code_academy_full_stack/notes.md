@@ -35,6 +35,7 @@
 
 
 ### Responsive Design
+#### Sizing
 - responsive measurement standards:
     - em: font size based on the default browser font
     - rem: root em.  Checks the "root element," which is normally the html tag.  Helps size elements consistently across an entire website
@@ -67,3 +68,35 @@
         background-size: cover;
     }
     ```
+#### Media Queries
+- `meta` tag: used to show website based on the size of the viewport (i.e. webpage is 960px, screen is 320px, `<meta name="viewport" content="width=device-width, initial-scale=1">` will cause the webpage to display at 320px). Has following arguments/components
+    - `name="viewport"`: Tells browser to base display off the screen:
+    - `content`: values for tag, including `width` and `initial-scale`
+        - `width=device-width`: controls the size of the viewport (width of device)
+        - `initial-scale=1`: sets initial zoom level
+- media queries: Indicate the type of devices (e.g. `only screen`) and screen size (`max-width: 480px`, `min-width: 320px`, etc.) that you want CSS to apply to
+    - Syntax (can use comma separated list to indicate that one of a number of conditions needs to be met)
+        ```
+        @media only screen and (max-width: 480px) {
+          body {
+            font-size: 12px;
+          }
+        }
+
+        ```
+    - Attributes to target
+        - Screen size
+        - Screen resolution with dots per inch (dpi): (`min/max-resolution: 300dpi`).  USed to target high vs. low quality images
+        - `orientation`: checks whether a page is wider (`landscape`) or taller (`portrait`).
+    - What screen sizes to set your web page based on (aka breakpoints).  
+        - Mobile: < 480px
+        - Tablet: < 768px
+        - Tablet Landscape: < 1024px
+        - Laptop: < 1600px
+        - Desktop: > 1600px
+#### Simulating Screen sizes with Chrome DevTools
+- Device mode simulates different device types (can even go into specific devices like iPhone 6), throttle CPU/network
+- Shows the various elements device sizes (has defaults) and can show breakpoints (and the associated media declarations) based on media queries
+- Device Pixel Ratio: ratio between physical hardware and logical CSS pixels
+- Rotate view port to look at landscape
+- Sensor features: geolocation, setting orientation
