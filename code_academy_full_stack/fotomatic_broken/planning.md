@@ -8,9 +8,17 @@
 
 3. Get the desktop version working
     - Sign up section
-        - Spacing outside green box
-        - Spacing inside green box
-        - Formatting elements
+        - [x] Spacing outside green box
+        - [x] Spacing inside green box
+        - [x] offset to allow for banner
     - Navigation
-        - Pinned to the top (give sign up section margin)
+        - [x] Adjust padding
+        - [x] Link formatting
+        - [x] Remove list dot
+        - [x] Pinned to the top (give sign up section margin)
+    - features section
+        - [x] set up images
+        - [] spacing between header and description text
+    - filters sections
+    - footer section
     - Coloring and images

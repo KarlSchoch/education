@@ -6,8 +6,8 @@ html {
 }
 
 .main-content {
-  position: relative;
-  top: 5.3125rem; /* To offset for fixed header. */
+  /* position: relative; */
+  margin-top: 5.3125rem; /* To offset for fixed header. */
 }
 
 .center {
@@ -38,6 +38,7 @@ html {
 
 header {
   position: fixed;
+  top: 0;
   width: 100%;
   border-bottom: solid 1px #c6c1c1;
   background-color: white;
@@ -46,15 +47,20 @@ header {
 header .content {
   display: flex;
   align-items: center;
-  padding: 1.875rem;
+  padding: 0.8125rem 1.875rem;
 }
 
 header .logo {
   flex: 1;
+  color:#4a4a4a;
+  font-size: 1.5rem;
+  font-family: Roboto-Mono-Regular;
+  text-decoration: none;
 }
 
 header nav ul {
   display: flex;
+  list-style-type: none;
 }
 
 nav li {
@@ -127,7 +133,7 @@ header .mobile {
 }
 
 #sign-up-cta {
-  padding: 0 5rem 2.5rem 5rem;
+  padding: 2rem 5rem 3.5rem 5rem;
   margin: 10.5rem 0 10.5rem 6.25rem;
   border: solid 1px #979797;
   border-radius: 4px;
@@ -136,7 +142,6 @@ header .mobile {
 
 #sign-up-cta .content {
   width: 25.625rem;
-  margin-top: 2rem;
   font-family: "Roboto", sans-serif;
   font-size: 1.25rem;
   line-height: 1.4;
@@ -145,10 +150,12 @@ header .mobile {
 
 #sign-up-cta h1 {
   font-size: 3.125rem;
+  margin: 0 0 0.75rem 0;
 }
 
 #sign-up-cta h2 {
   font-size: 2.25rem;
+  margin: 0;
 }
 
 #sign-up-cta span strong {
@@ -161,7 +168,6 @@ header .mobile {
 
 #sign-up-cta .striking {
   font-family: "Rubik", sans-serif;
-  padding-bottom: .75rem;
 }
 
 #sign-up-cta .button {
@@ -235,6 +241,13 @@ header .mobile {
   width: 90%;
   height: 65%;
   margin: 0 auto;
+  overflow: hidden;
+}
+
+.feature .image-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .feature h2 {
