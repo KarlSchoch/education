@@ -18,7 +18,7 @@
         - [x] Pinned to the top (give sign up section margin)
     - features section
         - [x] set up images
-        - [] spacing between header and description text
+        - [x] spacing between header and description text
     - filters sections
     - footer section
     - Coloring and images

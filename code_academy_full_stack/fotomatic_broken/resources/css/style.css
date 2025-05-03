@@ -226,14 +226,13 @@ header .mobile {
 #features-section {
   display: flex;
   justify-content: space-between;
-  padding: 4rem 5%;
+  padding: 4rem 5% 2.875rem 5%;
   background-color: #f3f3f3;
 }
 
 .feature {
   flex: 1;
-  padding: 2rem;
-  margin: 0px 1.25rem;
+  margin: 1rem;
   background-color: white;
 }
 
@@ -241,6 +240,8 @@ header .mobile {
   width: 90%;
   height: 65%;
   margin: 0 auto;
+  margin-top: 1rem;
+  padding: 0 1rem;
   overflow: hidden;
 }
 
@@ -251,10 +252,10 @@ header .mobile {
 }
 
 .feature h2 {
-  padding-bottom: .5rem;
   font-size: 2.25rem;
   font-weight: bold;
   color: #4a4a4a;
+  margin: 1rem 0 0rem 0;
 }
 
 .feature h3 {
@@ -262,6 +263,7 @@ header .mobile {
   line-height: 1.2;
   font-weight: 300;
   color: #4a4a4a;
+  margin-top: 0;
 }
 
 @media only screen and (max-width: 890px) {
@@ -305,6 +307,7 @@ header .mobile {
   font-size: 2.25rem;
   font-weight: bold;
   color: white;
+  margin: 0;
 }
 
 #filters-section .content h3 {
@@ -312,11 +315,23 @@ header .mobile {
   line-height: 1.4;
   font-weight: 300;
   color: white;
+  margin: 0;
 }
 
 #filters-section .images-container {
+  display: flex;
   max-width: 100%;
   padding: 0 1%;
+}
+
+#filters-section .image-container {
+  max-width: 25%;
+  overflow: hidden;
+}
+
+#filters-section .image-container img {
+  max-width: 100%;
+  height: auto;
 }
 
 @media only screen and (max-width: 760px) {
