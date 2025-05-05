@@ -6,7 +6,7 @@ html {
 }
 
 .main-content {
-  /* position: relative; */
+  position: relative;
   margin-top: 5.3125rem; /* To offset for fixed header. */
 }
 
@@ -26,6 +26,7 @@ html {
 
 .image-container img {
   display: block;
+  max-width: 100%;
 }
 
 @media only screen and (max-width: 760px) {
@@ -38,7 +39,7 @@ html {
 
 header {
   position: fixed;
-  top: 0;
+  z-index: 100;
   width: 100%;
   border-bottom: solid 1px #c6c1c1;
   background-color: white;
@@ -47,20 +48,20 @@ header {
 header .content {
   display: flex;
   align-items: center;
-  padding: 0.8125rem 1.875rem;
+  padding: 1.875rem;
 }
 
 header .logo {
   flex: 1;
-  color:#4a4a4a;
+  /* color:#4a4a4a;
   font-size: 1.5rem;
   font-family: Roboto-Mono-Regular;
-  text-decoration: none;
+  text-decoration: none; */
 }
 
 header nav ul {
   display: flex;
-  list-style-type: none;
+  /* list-style-type: none; */
 }
 
 nav li {
@@ -74,6 +75,18 @@ nav a {
   color: #4a4a4a;
 }
 
+/* Adjustment from solution to deal with final element in header */
+nav .button {
+  padding: .1875rem .5rem;
+  background-color: #9dc20b;
+  line-height: 1.6;
+  color: white;
+}
+
+nav li:last-child {
+  display: none;
+}
+
 header .icon {
   width: 1rem;
   padding-left: .75rem;
@@ -83,10 +96,25 @@ header .mobile {
   display: none;
 }
 
-@media only screen and (max-width: 760px) {
-  /* header .desktop {
+
+@media only screen and (max-width: 895px) {
+  nav li:last-child {
     display: none;
-  } */  
+  }
+  header .content {
+    padding: 1rem 1rem;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  header .desktop {
+    display: none;
+  }  
+
+  header .mobile {
+    display: block;
+    width: 100%;
+  }
 
   header .content {
     padding: .5rem 0;
@@ -102,63 +130,35 @@ header .mobile {
   header .mobile li {
     padding: 0;
   }
-
-  header .mobile .button {
-    padding: .1875rem .5rem;
-    background-color: #9dc20b;
-    line-height: 1.6;
-    color: white;
-  }
 }
 
-@media only screen and (max-width: 480px) {
-  header .desktop {
-    display: none;
-  }
-  
-  header .mobile {
-    display: block;
-    width: 100%;
-  }
 
-  header .mobile ul {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-  }
-
-  header .mobile li {
-    padding: 0;
-  }
-
-  header .mobile .button {
-    padding: .1875rem .5rem;
-    background-color: #9dc20b;
-    line-height: 1.6;
-    color: white;
-  }
-}
 
 /* Sign Up Section */
-.banner {
+/* .banner {
+  background-image: url("../images/banner-landingpage.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+} */
+
+#sign-up-section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 43.5rem;
   background-image: url("../images/banner-landingpage.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-#sign-up-section {
-  display: flex;
-  justify-content: flex-start;
-  /* align-items: flex-start; */
-  align-items: center;
-  height: 43.5rem;
-}
-
 #sign-up-cta {
-  padding: 2rem 5rem 3.5rem 5rem;
-  margin: 10.5rem 0 10.5rem 6.25rem;
+  position: relative;
+  top: 171px;
+  left: 10%;
+  padding: 0 5rem 2.5rem 5rem;
+  /* margin: 10.5rem 0 10.5rem 6.25rem; */
   border: solid 1px #979797;
   border-radius: 4px;
   background-color: #9dc20b;
