@@ -19,6 +19,6 @@
     - features section
         - [x] set up images
         - [x] spacing between header and description text
-    - filters sections
+    - [x] filters sections
     - footer section
     - Coloring and images

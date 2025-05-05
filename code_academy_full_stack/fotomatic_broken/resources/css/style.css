@@ -84,17 +84,41 @@ header .mobile {
 }
 
 @media only screen and (max-width: 760px) {
-  header .desktop {
+  /* header .desktop {
     display: none;
-  }
-
-  header .mobile {
-    display: block;
-    width: 100%;
-  }
+  } */  
 
   header .content {
     padding: .5rem 0;
+  }
+
+  header .mobile ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
+
+  header .mobile li {
+    padding: 0;
+  }
+
+  header .mobile .button {
+    padding: .1875rem .5rem;
+    background-color: #9dc20b;
+    line-height: 1.6;
+    color: white;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  header .desktop {
+    display: none;
+  }
+  
+  header .mobile {
+    display: block;
+    width: 100%;
   }
 
   header .mobile ul {
@@ -255,7 +279,7 @@ header .mobile {
   font-size: 2.25rem;
   font-weight: bold;
   color: #4a4a4a;
-  margin: 1rem 0 0rem 0;
+  margin: 1rem 1rem 0rem 1rem;
 }
 
 .feature h3 {
@@ -264,6 +288,8 @@ header .mobile {
   font-weight: 300;
   color: #4a4a4a;
   margin-top: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 @media only screen and (max-width: 890px) {
@@ -370,11 +396,13 @@ header .mobile {
   background-color: #f3f3f3;
 }
 
-#quotes-section content {
+#quotes-section .content {
   padding: 5rem 0;
+  display: flex;
+  justify-self: center;
 }
 
-#quotes-section quote {
+#quotes-section .quote {
   padding-right: 1.875rem;
   font-family: "Palatino", serif;
   font-size: 1.875rem;
@@ -383,16 +411,16 @@ header .mobile {
   color: #4a4a4a;
 }
 
-#quotes-section quote-citation {
+#quotes-section .quote-citation {
   height: 1.875rem;
 }
 
 @media only screen and (max-width: 760px) {
-  #quotes-section content {
+  #quotes-section .content {
     padding: 1.875rem .625rem;
   }
 
-  #quotes-section quote {
+  #quotes-section .quote {
     font-size: 1.5rem;
     line-height: 1.4;
   }
