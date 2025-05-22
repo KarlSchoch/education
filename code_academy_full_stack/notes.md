@@ -35,6 +35,12 @@
 
 
 ### Responsive Design
+Key Resources
+- (Reference) [Grid Garden](https://codepip.com/games/grid-garden/): Game that shows how to do CSS grid but also demos a lot of other stuff
+- (Article) [Responsive Web Design](https://www.smashingmagazine.com/2011/01/guidelines-for-responsive-web-design/): Big article that provides motivation for why you do responsive design and various tips and tricks.
+- (Article) [Fundamentals of REsponsive Design](https://www.taniarascia.com/you-dont-need-a-framework/): Talks through what you need to do to get the basics of responsive web design down.  Also has a lot of content about Web Dev (React, JS Event Loop, etc.)
+- (Article) [Complete Guide to CSS Grid](https://css-tricks.com/snippets/css/complete-guide-grid/): Waht it says on the Tin.  Guide to CSS Grid from soup to nuts.
+
 #### Sizing
 - responsive measurement standards:
     - em: font size based on the default browser font
@@ -100,3 +106,41 @@
 - Device Pixel Ratio: ratio between physical hardware and logical CSS pixels
 - Rotate view port to look at landscape
 - Sensor features: geolocation, setting orientation
+
+# Building Interactive Websites
+Useful JavaScript Resources
+- [Douglas Crockford Lectures](https://www.youtube.com/watch?v=v2ifWcnQs6M): Lecture about JavasScript.  Part One of a three part series.
+## JavaScript Syntax Pt. I
+### Functions
+- Function declaration
+```
+function greetWorld() {
+    console.log("Hello World)
+}
+```
+- Function expression
+```
+const calcuateArea = function(width, height) {
+    const area = width * height
+    return area
+}
+```
+- Arrow notation
+```
+const calculateArea = (width, height) => {
+    const area = width * height
+    return area
+}
+```
+### Scope
+- Global: can be accessed to every part of the program
+- Block Scope: can only be accessed within set of `{}` in which they are defined
+- Local variables: only exist within the block scipe
+- Global namespace: contains globally scope information
+- Scope pollution: too many variables exist in a namespace or variable names are reused
+## Running Javascript
+- In the browser
+    - $() is an alias for document.querySelector()
+- Different runtime environments
+    - Browser: 
+    - Node: Browser defined capabilities don't work
