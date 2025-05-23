@@ -144,3 +144,10 @@ const calculateArea = (width, height) => {
 - Different runtime environments
     - Browser: 
     - Node: Browser defined capabilities don't work
+## JavaScript Syntax Pt. II
+- `for ... of` loop
+    - `for (const hobby of hobbies)` is simpler than `for (let i = 0; i < hobbies.length; i++)`
+    - `continue` skips a single iteration of the loop
+- objects
+    - 
+
