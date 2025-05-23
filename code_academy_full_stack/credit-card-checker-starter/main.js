@@ -50,14 +50,21 @@ function validateCred(arr) {
         return false
     }
 }
-console.log(validateCred(valid1) === true)
-console.log(validateCred(valid2) === true)
-console.log(validateCred(valid3) === true)
-console.log(validateCred(valid4) === true)
-console.log(validateCred(valid5) === true)
-console.log(validateCred(invalid1) === false)
-console.log(validateCred(invalid2) === false)
-console.log(validateCred(invalid3) === false)
-console.log(validateCred(invalid4) === false)
-console.log(validateCred(invalid5) === false)
+// console.log(validateCred(valid1) === true)
+// console.log(validateCred(valid2) === true)
+// console.log(validateCred(valid3) === true)
+// console.log(validateCred(valid4) === true)
+// console.log(validateCred(valid5) === true)
+// console.log(validateCred(invalid1) === false)
+// console.log(validateCred(invalid2) === false)
+// console.log(validateCred(invalid3) === false)
+// console.log(validateCred(invalid4) === false)
+// console.log(validateCred(invalid5) === false)
+
+function findInvalidCards(arr) {
+    return arr.filter(el => !validateCred(el))
+}
+// const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5]
+console.log(findInvalidCards(batch.slice(0, 5)))
+console.log(findInvalidCards(batch.slice(5, 10)))
 
