@@ -65,6 +65,30 @@ function findInvalidCards(arr) {
     return arr.filter(el => !validateCred(el))
 }
 // const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5]
-console.log(findInvalidCards(batch.slice(0, 5)))
-console.log(findInvalidCards(batch.slice(5, 10)))
+// console.log(findInvalidCards(batch.slice(0, 5)))
+// console.log(findInvalidCards(batch.slice(5, 10)))
 
+
+function idInvalidCardCompanies(arr) {
+    invalidCards = findInvalidCards(arr)
+    let cardIssuers = new Set()
+    invalidCards.forEach(el => {
+        firstDigit = el[0]
+        switch (firstDigit) {
+            case 3:
+                cardIssuers.add('Amex (American Express)')
+            case 4:
+                cardIssuers.add('Visa')
+            case 5:
+                cardIssuers.add('Mastercard')
+            case 6:
+                cardIssuers.add('Discover')
+            default:
+                cardIssuers.add('Company not found')
+        }
+    });
+    return [...cardIssuers]
+}
+console.log(idInvalidCardCompanies(batch.slice(0, 5)))
+console.log(idInvalidCardCompanies(batch.slice(5, 10)))
+console.log(idInvalidCardCompanies(batch.slice(10, 15)))
