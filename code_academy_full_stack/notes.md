@@ -150,4 +150,20 @@ const calculateArea = (width, height) => {
     - `continue` skips a single iteration of the loop
 - objects
     - 
-
+## Git
+- HEAD
+    - show head commit (commit you are currently on): `git show HEAD`
+    - Lets you see/restore state as of last commit (i.e. undo the diff): `git checkout HEAD filename` OR `git checkout -- filename`
+    - unstage from staging area: `git reset HEAD filename|SHA`
+- stash: to switch branches you need to be at a clean commit point.  Stash lets you maintain your changes without commiting them, which is useful if you are experimenting.  Workflow is as follows
+    1. Make some changes to a branch
+    2. Get called to another branch to do something
+    3. Run `git stash` to save changes without making a commit
+    4. Make changes on other branch
+    5. Come back to the first branch
+    6. Get back changes by running `git stash pop`
+- `git commit --amend`: Literally changes the status of the work on that commit
+- Aliasing: Lets you create shorthand for git functionality
+    - `git config --global alias.<insert-shorthand> "<insert-full-command>"`
+    - Ex: `git config --global alias.co "commit"`
+    - Ex: `git config --global alias.glop "log --pretty=format:"%h %s" --graph"`
