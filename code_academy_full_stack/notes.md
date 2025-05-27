@@ -167,3 +167,46 @@ const calculateArea = (width, height) => {
     - `git config --global alias.<insert-shorthand> "<insert-full-command>"`
     - Ex: `git config --global alias.co "commit"`
     - Ex: `git config --global alias.glop "log --pretty=format:"%h %s" --graph"`
+## JavaScript and the DOM
+- `<script>` element within html that allows you to use JavaScript
+    - referce script held in another file using `src` attribute: `<script src='./someScript.js'></script>`
+- Browser parsing
+    - HTML parser parses elements in the order that they appear in the HTML file.
+        - Means that dependencies get established
+        - `defer` attribute (`<script src="example.js" defer></script>`): loads script but *defers* execution until after the rest of the elements in the HTML file are parsed
+            - Use when script involves interacting with the DOM
+        - `async` attribute (`<script src="example.js" async></script>`): Allows the rest of the page to parse the HTML, but executes immediately after it is downloaded.
+            - Use when you have a script that it doesn't matter when it loads since it will optimize website load time.
+- DOM (Document Object Model)
+    - Document: a webpage
+    - Object: stuff on the webpage (aka nodes/elements)
+        - Content (images, text)
+        - Structural Elements (divs)
+        - Attributes (HTML classes, styles, etc.)
+    - Model: How things are put together.  The DOM is the way to model the objects in a webpage
+        - Instructions
+        - Descriptions
+    - Tree GRaph
+        - DOM is a tree graph
+        - HTML tags are node in the graph (`<html>` -> `<head>`/`<body>`)
+        - Can view this in the developer tools
+    - Viewing it through the browser is probably simplest and most useful
+    - Source Code -> DOM -> Document
+    - Programmatically accessing it
+        - `<document>` Keyword: root node of the DOM tree (e.g. to access the `<body>` tag, you can call `document.body`)
+        - `.innerHTML` property: Allows you to access and set contents of an element
+            - Example: `document.body.innerHTML = 'The cat loves the dog.';` allows you to make it so that the body contains the text: "The cat loves the dog"
+        - PAtterns for selecting elements from the DOM
+            - `document.querySelector('<someSelector>')[0].<someAttribute>`: <h1>, <>
+            - `document.getElementByID('<someId>')[0].<someAttribute>`
+            - `document.getElementByClassName('<someClassName>')[0].<someAttribute>`
+            - `document.getElementByTagName('<someTagName>')[0].<someAttribute>`: 
+        - [reference for how HTML elements were converted into JavaScript](https://www.w3schools.com/jsref/dom_obj_style.asp)
+        - Traversing the DOM
+            - `.parentNode`: REturns partent of specified element in DOM hierarchy
+            - `.children`: *Array* of specified elements children; if there are no children you get back a `null`
+        - Creating and inserting elements
+            - `document.createElement('p')`: Creates empty element with no `.innerHTML` that you can assign values to/pass to variables; DOES NOT append to the document
+            - `document.<some-element>.appendChild(<newlyCreatedElement>)`: allows you to take that element you created and insert it into the DOM
+
+- 
