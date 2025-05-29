@@ -287,6 +287,14 @@ const calculateArea = (width, height) => {
             </form>
             ```
             - Different form types: `password`, `text`, `number`, `range`, `checkbox`, `radio`, dropdown, datalist (filter based on typed inputs), `textarea`, `submit`
+                - `radio` syntax: Generaly, create a `<span>` element that contains the label, the create the different options that you want for the users choice as separate `<input>` elements with the values and names showing what they represent (i.e. yes vs. no), and then create labels for each choice
+                ```html
+                <span>Yes or No:</span>
+                <input id="yes" type="radio" name="yes" value="yes" required>
+                <label>Yes</label>
+                <input id="no" type="radio" name="no" value="no" required>
+                <label>No</label>
+                ```
                 - dropdown syntax
                 ```
                 <select id='lunch' name='lunch'>
