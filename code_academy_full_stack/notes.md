@@ -205,8 +205,104 @@ const calculateArea = (width, height) => {
         - Traversing the DOM
             - `.parentNode`: REturns partent of specified element in DOM hierarchy
             - `.children`: *Array* of specified elements children; if there are no children you get back a `null`
-        - Creating and inserting elements
+        - Creating, inserting, hiding, and removing elements
             - `document.createElement('p')`: Creates empty element with no `.innerHTML` that you can assign values to/pass to variables; DOES NOT append to the document
             - `document.<some-element>.appendChild(<newlyCreatedElement>)`: allows you to take that element you created and insert it into the DOM
+            - `.removeChild()`: Allos for removing an element
+                1. `let paragraph = document.querySelector('p');`: returns first paragraph in the document
+                2. `document.body.removeChild(paragraph)`: chain to the parent of the paragraph (`body`) to remove the the returned element
+            - `document.getElementById('sign').hidden = true`: hides the returned element.  `hide` is an argument
+        - DOM Interactivity
+            1. Assign function to run whenever specified event happens
+            ```
+            let element = document.querySelector('button');
+            element.onclick = function() {
+                element.style.backgroundColor = 'blue';
+            }
+            ```
+            2. assign property (e.g. `.onclick`) to a function by name
+            ```
+            let element = document.querySelector('button');
+            function turnBlue() {
+                element.style.backgroundColor = 'blue';
+            }
+            element.onClick = turnBlue;
+            ```
+    - DOM Events
+        - event handler functions: fire as a response to a specific event
+            - How to register event handler functions: Need to add the eventListeners **OUTSIDE** of the definition of the function.
+                1. `.addEventListener()`: have DOM element listen for specific event and execute block of code when the event is detected
+                    - event target: DOM element listening for the event
+                    - event handler: code runs when event happens
+                    - approach lets you add multiple event handler functions
+                    ```js
+                    let eventTarget = document.getElementById('targetElement'); // selecting an element to target
+                    eventTarget.addEventListener(// Adding a listener to that element
+                        'click', // what event to listen for
+                        function() { // function to execute when event is detected for the specified element
+                            // Some code to run
+                    })
+                    ```
+                2. `eventTarget.on<event-name>`: lets you only define a single event handler function for that event
+            - Removing event listener: needs the exact name of both the event type and event handler function.  **Cannot remove anonymous functions since you need the name**
+                `eventTarget.removeEventListener('<event-name>', <event-handler-function-name>);`
+        - Event Object Properties
+            - Events are objects, and you can pass those to the event handler functions and then access properties and methods within that function
+            - [MDN JS Documentation Events Refernce](https://developer.mozilla.org/en-US/docs/Web/Events#)
+            - Available Properties
+                - `.target`: element the event is registered to
+                - `.type`: name of the event
+                - `.timeStamp`: number of milliseconds passed since document loaded and event was triggered
+        - Mouse related events
+            - `mousedown`: mouse is pressed
+            - `mouseup`: mouse is depressed
+            - `mouseover`: mouse enters an eleemnt
+            - `mouseout`: mouse leaves an element
+        - Keyboard related events
+            - `keydown`: User presses a key down
+            - `keyup`: User release a key
+            - `keypress`: User presses a key down and releases it
+            - `.key` property of these events: Stores the valaue of the key pressed
+    - Forms
+        - Validation: Client side (HTML or JavaScript) vs. Backend
+            - Client side
+                - High Level Examples
+                    - HTML: `required` (any), `minlength` and `maxlength` (strings), `min`/`max`/`step` (with range input type), `pattern` (strings)
+                    - JavaScript: if you're suing a framework, might require a library (e.g. formik or parsley.js)
+                - Detailed discussion
+                    - `required`
+                    - `min`/`max`: applies to types `number` and `range`
+                    - `minlength`/`maxlength`: applies to `text` fields
+                    - `pattern`: used in text fields that matches a defined regex pattern
+            - Backend: Required since user can disable JS on the browser/middleman can change request after submitted by a user.  CAn be done either using asynch or full backend requests.
 
-- 
+        - Creating Forms
+            - basic syntax
+            ```html
+            <form action='/pageToGoTo.html' method='POST'>
+                <h1>Some title</h1>
+                <p>Some distription of what the form is for</p>
+                <label for="id-val">Some descriptive label</label>
+                <input type="<text-or-something>" name="<some-descriptive-name>" value="something-to-prefill" id="id-val"> <!-- Name is reuqired or else data won't be sent -->
+            </form>
+            ```
+            - Different form types: `password`, `text`, `number`, `range`, `checkbox`, `radio`, dropdown, datalist (filter based on typed inputs), `textarea`, `submit`
+                - dropdown syntax
+                ```
+                <select id='lunch' name='lunch'>
+                    <option value='pizza'>Pizza</option>
+                    <option value='curry'>Curry</option>
+                    ...
+                </select>
+                ```
+                - datalist syntax: create a 'text' input type where you have a 'list' attribute that you pair with the datalist `id`
+                ```
+                <input type='text' list='lunches' id='city' name='city'>
+                <datalist id='lunches'>
+                    <option value='pizza'>Pizza</option>
+                    <option value='curry'>Curry</option>
+                    ...
+                </datalist>
+                ```
+                - textarea syntax
+                `<textarea id="blog" name="blog" rows="5" cols="30">Some default text</textarea>`
