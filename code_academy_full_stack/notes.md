@@ -110,6 +110,9 @@ Key Resources
 # Building Interactive Websites
 Useful JavaScript Resources
 - [Douglas Crockford Lectures](https://www.youtube.com/watch?v=v2ifWcnQs6M): Lecture about JavasScript.  Part One of a three part series.
+- (Article)[How to add JavaScript to HTML](https://www.digitalocean.com/community/tutorials/how-to-add-javascript-to-html)
+- (Article)[MDN Guide to Client-side form validation](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation)
+- (Book)**John Duckett's _HTML & CSS_**: Capter 7, page 144 - 174
 ## JavaScript Syntax Pt. I
 ### Functions
 - Function declaration
@@ -314,3 +317,39 @@ const calculateArea = (width, height) => {
                 ```
                 - textarea syntax
                 `<textarea id="blog" name="blog" rows="5" cols="30">Some default text</textarea>`
+## Making a Website Accessible
+What does this mean digitally.  Examples
+- Screen readers that parse a website for user with visual impairments
+- videos on websites are close captioned
+- images include "alt-text" for individuals with visual impairments
+- Websites are navigable without a mouse
+### Accessible Design
+- Contrast
+    - Headings: create structure, visual contrast, and navigation information to browsers to help assistive technlogy
+    - Font: use real text as oopposed to text within graphics (screen readers, scale/magnify with better legibility, site performance)
+    - Color: Darker on lighter, but gentler tones can avoid glare.
+- Trends that deviate from accessibilty best practices
+    - text overlaid on images
+    - removing input labels
+    - removing distinctive styling from buttons and links
+
+### Accessibility
+- Semantic Elements
+    - use `<header>` rather than `<div id="header">` since the `<header>` works with screen readers and intended purpose (easier for programmers to work with)
+    - css references needs to change too
+- ARIA Roles
+    - [Documentation](https://www.w3.org/TR/html-aria/#allowed-descendants-of-aria-roles) that contains list of allowable "roles"
+        - `note`
+        - `presentation`: indicates when elements are only there to organize information on the page and can help tell screen readers to skip over them in an intelligent manner (i.e. the reader will not read the `ol` or the `li` but will read the text between the `li` elements)
+    - Helps document what that part of the code does (i.e. banner, button, cell, etc.)
+- ARIA Properties
+    - `aria-label`: Useful if there is a caption explaining an image in that it can be used to explain how that caption relates to the image
+    ```html
+    <img src="#" alt="A painting of the Shenandoah Valley"/>
+    <p aria-label="Artist">Name of Artist that created the image<p>
+    ```
+- `alt` Attributes: used to describe an image out loud for a screen reader/display if an image doesn't load.  Some guidelines below
+    1. if the image is also an `<a>` element, make sure that the `alt` describes where the link goes
+    2. if the image is just a decorative border, leave the `alt` attribute blank rather than omitting it
+    3. Do not duplicate description between `alt` attribute and a nearby text element that describes the image
+    4. `alt` attribute shuld be kept to <= 150 characters
