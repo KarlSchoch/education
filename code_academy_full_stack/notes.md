@@ -355,14 +355,28 @@ What does this mean digitally.  Examples
     4. `alt` attribute shuld be kept to <= 150 characters
 ## Exam Notes
 ### Exam Pt. I
-Importing Functions
+Importing Functions: TLDR In node use `module.exports()` and `require()` and in the browser is `import` and `export`
 - ES Modules (Modern, Browser, or `"type": "module"` in Node)
     ```js
     // math.js
     export function add(a, b) { return a + b; }
+    export { someFunction, someOtherFunction }; // This is called NAMED EXPORTS
+    // Default Exports
+    const resources = { sweetFunction, anotherSweetFunction };
+    export default resources;
+
+    // analytics.js
+    export function add(a, b) { return a + b; }
 
     // main.js
-    import { add } from '.math.js';
+    import { add as mathAdd } from './math.js';
+    import { add as analyticsAdd } from './analytics.js';
+    import sweetFunctions from './math.js';
+    const { sweetFunction, anotherSweetFunction } = sweetFunctions;
+
+    ```
+    ```html
+    <script type="module" src="./module-code.js"></script>
     ```
 - Common JS (Legacy, default in Node.js)
     ```js
