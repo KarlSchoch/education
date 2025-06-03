@@ -353,3 +353,58 @@ What does this mean digitally.  Examples
     2. if the image is just a decorative border, leave the `alt` attribute blank rather than omitting it
     3. Do not duplicate description between `alt` attribute and a nearby text element that describes the image
     4. `alt` attribute shuld be kept to <= 150 characters
+## Exam Notes
+### Exam Pt. I
+Importing Functions
+- ES Modules (Modern, Browser, or `"type": "module"` in Node)
+    ```js
+    // math.js
+    export function add(a, b) { return a + b; }
+
+    // main.js
+    import { add } from '.math.js';
+    ```
+- Common JS (Legacy, default in Node.js)
+    ```js
+    // math.js
+    module.exports { add };
+
+    // main.js
+    const { add } = require('./math');
+    ```
+
+Assert Methods 
+- Strings are case sensitive for both equal and strictEqual
+| Method | Description |
+| ------ | ----------- |
+| `assert.ok(val)` | Checks truthiness |
+| `assert.equal(a, b)` | Loose (i.e. `==`) equality |
+| `assert.strictEqual(a, b)` | Strict (i.e. `===`) equality |
+| `assert.deepEqual(a, b)` | Deep (aka object) equality |
+| `assert.deepStrictEqual(a, b)` | Deep strict (aka object) equality |
+| `assert.throws(fn)` | Check that `fn()` throws an error |
+| `assert.doesNotThrow(fn)` | Ensure `fn()` doesn't throw |
+| `assert.fail(msg)` | Forces Failure |
+
+DOM Selection Methods (no `.getElement()` exists)
+| Method | Selector Style | Returns | Notes |
+| `getElementById(id)` | `#id` | Single Element | Fastest for ID lookup |
+| `getElementByClassName()` | `.class` | HTMLCollection | Live Collection |
+| `getElementByTagName()` | `tag` | HTML Collection | USe for all `<h1>`, etc. |
+| `querySelector()` | CSS Selector | First Match | Most flexibile for one element |
+| `querySelectorAll()` | CSS Selector | NodeList | Static list of all matches |
+
+Appending to the DOM
+- Pattern
+    1. Create element
+    2. Add content to that element
+    3. Append element
+- Sample Code
+    ```js
+    const el = document.createElement('div');
+    el.textContent = 'Hello!';
+    document.body.appendChild(el);
+    ```
+- Notes:
+    - `appendChild()` adds one node
+    - `append()` adds one OR MORE Nodes/strings
