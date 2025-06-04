@@ -356,6 +356,7 @@ What does this mean digitally.  Examples
 ## Exam Notes
 ### Exam Pt. I
 Importing Functions: TLDR In node use `module.exports()` and `require()` and in the browser is `import` and `export`
+[MDN JS Modules Documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 - ES Modules (Modern, Browser, or `"type": "module"` in Node)
     ```js
     // math.js
@@ -371,8 +372,8 @@ Importing Functions: TLDR In node use `module.exports()` and `require()` and in 
     // main.js
     import { add as mathAdd } from './math.js';
     import { add as analyticsAdd } from './analytics.js';
-    import sweetFunctions from './math.js';
-    const { sweetFunction, anotherSweetFunction } = sweetFunctions;
+    import sweetFunctions from './math.js'; // Named Exports
+    const { sweetFunction, anotherSweetFunction } = sweetFunctions; // Default Exports
 
     ```
     ```html
@@ -422,3 +423,91 @@ Appending to the DOM
 - Notes:
     - `appendChild()` adds one node
     - `append()` adds one OR MORE Nodes/strings
+# Front End Development
+## JS Testing
+- REgression testing: Making sure that old tests for existing features still work after introducing a new feature
+- Types of testing
+    - Unit tests: testing small piece of code (e.g. function), generally with fake (aka "mock") data
+    - Integration tests: How different units of a program work together.  For example, if you're working with an external API, you are making sure that the data fetched from that is formatted correctly and that you deal with the external source introducing delays, errors, or invalid data.
+    - End to end tests: Tests the application the way that a real user would experience it and includes interactions with external services like databases and APIs
+- Software Testing Methodologies: Strategies for testing all pieces of your software to ensure it works as expected
+    - Types that prioritize writing tests before the code
+        - Test driven development (TDD)
+            - Functions and Classes are the smallest units of code as the smallest unit to test
+        - Behavior driven development (BDD)
+            - Tests written from the persepective of a user
+            - Unit of tests is a feature s you are testing the feature rather than the functions or classes
+        - Specification by Example (SBE)
+        - Acceptance Test driven development (ATDD)
+- [Mocha test framework](https://mochajs.org/)
+    - Installing Mocha
+        1. `npm` is the package manager
+        2. `npm init` creates `package.json` file that manages packages for the project
+        3. `npm install mocha -D` installs Mocha and the `-D` indicates that it is a dev dependency (i.e. it will not show up in the production bundle) and will show up under the `devDependencies` section of the `package.json` file
+    - Running Mocha
+        - Approach 1: Call directly from `node_modules`: `./node_modules/mocha/bin/mocha`
+        - Approach 2 (recommended): add script to `package.json`
+            1. Go to the scripts object in `package.json` and set the value of `test` to `mocha`
+                ```json
+                "scripts": {
+                    "test": "mocha"
+                }
+                ```
+            2. Run Mocha using `npm test`
+    - `describe` and `it` blocks
+        - Nest `describe` blocks to resemble the implementation code structure (i.e. if there is an Object with methods, create a `describe` block for the object and then nested `describe` blocks for each of the methods within the object)
+        - Write individual tests in `it` blocks
+            ```js
+            describe('Math', () => {
+                describe('.methodOne', () => {
+                    it('some description of what the method should do', () -> {
+                        // Test goes here
+                    });
+                    // more it statements to capture method's expected behavior
+                });
+                describe('.methodTwo', () => {
+                    it('some description of what the method should do', () -> {
+                        // Test goes here
+                    });
+                    // more it statements to capture method's expected behavior
+                });
+            });
+            ```
+    - `assert`: Provided by Node.js (import at the top of your files with `const assert = require('assert');`)
+        - `assert.ok()`: Checks truthiness
+        - `.equal()`: Checks loose (i.e. `==`) equality
+        - `.strictEqual()`: Checks strict (i.e. `===`) equality
+        - `.deepEqual()`: Checks loose (i.e. `==`) equality for things like objects or arrays (i.e. checks that the attributes of two separate objects are equal)
+        - `.deepStrictEqual()`: Same as above, but checks for strict rather than loose equality
+        - [Additional methods](https://nodejs.org/api/assert.html)
+
+    - Steup, exercise, verify, teardown: Phases of/way to structure testing
+        - Setup: create objects, variables, and set conditions your test depends upon
+        - Exercices: Execute functionality you are testing
+        - Verify: Check expectations against result produced during exercise phase (use `assert` statements)
+        - Teardown: Ensures that the testing environment stays clean to isolate the conditions of the tests.  Involves doing things like deleting any files that were created as part of executing the test
+        - Hooks: help to reduce duplicative code required across multiple phases (similar to pytest fixtures)
+            - Types of hooks
+                - `beforeEach(callback)`: `callback` run before each test
+                - `afterEach(callback)`: `callback` run after each test
+                - `before(callback)`: `callback` run before first test
+                - `after(callback)`: `callback` run after first test
+            - Placed in the `describe` block, but outside the `it` blocks
+                ```js
+                describe('hook illustration', () => {
+                    let testValue;
+
+                    // Execute before hooks
+                    beforeEach(() => {
+                        testValue=5;
+                    });
+
+                    // it statements
+                });
+                ```
+
+## Web Apps
+## React Pt. I
+## React Pt. II
+## Redux
+## Git and GitHub Pt. II
