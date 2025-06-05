@@ -439,73 +439,120 @@ Appending to the DOM
             - Unit of tests is a feature s you are testing the feature rather than the functions or classes
         - Specification by Example (SBE)
         - Acceptance Test driven development (ATDD)
-- [Mocha test framework](https://mochajs.org/)
-    - Installing Mocha
-        1. `npm` is the package manager
-        2. `npm init` creates `package.json` file that manages packages for the project
-        3. `npm install mocha -D` installs Mocha and the `-D` indicates that it is a dev dependency (i.e. it will not show up in the production bundle) and will show up under the `devDependencies` section of the `package.json` file
-    - Running Mocha
-        - Approach 1: Call directly from `node_modules`: `./node_modules/mocha/bin/mocha`
-        - Approach 2 (recommended): add script to `package.json`
-            1. Go to the scripts object in `package.json` and set the value of `test` to `mocha`
-                ```json
-                "scripts": {
-                    "test": "mocha"
-                }
-                ```
-            2. Run Mocha using `npm test`
-    - `describe` and `it` blocks
-        - Nest `describe` blocks to resemble the implementation code structure (i.e. if there is an Object with methods, create a `describe` block for the object and then nested `describe` blocks for each of the methods within the object)
-        - Write individual tests in `it` blocks
+### Mocha
+- [Docs](https://mochajs.org/)
+- Installing Mocha
+    1. `npm` is the package manager
+    2. `npm init` creates `package.json` file that manages packages for the project
+    3. `npm install mocha -D` installs Mocha and the `-D` indicates that it is a dev dependency (i.e. it will not show up in the production bundle) and will show up under the `devDependencies` section of the `package.json` file
+- Running Mocha
+    - Approach 1: Call directly from `node_modules`: `./node_modules/mocha/bin/mocha`
+    - Approach 2 (recommended): add script to `package.json`
+        1. Go to the scripts object in `package.json` and set the value of `test` to `mocha`
+            ```json
+            "scripts": {
+                "test": "mocha"
+            }
+            ```
+        2. Run Mocha using `npm test`
+- `describe` and `it` blocks
+    - Nest `describe` blocks to resemble the implementation code structure (i.e. if there is an Object with methods, create a `describe` block for the object and then nested `describe` blocks for each of the methods within the object)
+    - Write individual tests in `it` blocks
+        ```js
+        describe('Math', () => {
+            describe('.methodOne', () => {
+                it('some description of what the method should do', () -> {
+                    // Test goes here
+                });
+                // more it statements to capture method's expected behavior
+            });
+            describe('.methodTwo', () => {
+                it('some description of what the method should do', () -> {
+                    // Test goes here
+                });
+                // more it statements to capture method's expected behavior
+            });
+        });
+        ```
+- `assert`: Provided by Node.js (import at the top of your files with `const assert = require('assert');`)
+    - `assert.ok()`: Checks truthiness
+    - `.equal()`: Checks loose (i.e. `==`) equality
+    - `.strictEqual()`: Checks strict (i.e. `===`) equality
+    - `.deepEqual()`: Checks loose (i.e. `==`) equality for things like objects or arrays (i.e. checks that the attributes of two separate objects are equal)
+    - `.deepStrictEqual()`: Same as above, but checks for strict rather than loose equality
+    - [Additional methods](https://nodejs.org/api/assert.html)
+
+- Steup, exercise, verify, teardown: Phases of/way to structure testing
+    - Setup: create objects, variables, and set conditions your test depends upon
+    - Exercices: Execute functionality you are testing
+    - Verify: Check expectations against result produced during exercise phase (use `assert` statements)
+    - Teardown: Ensures that the testing environment stays clean to isolate the conditions of the tests.  Involves doing things like deleting any files that were created as part of executing the test
+    - Hooks: help to reduce duplicative code required across multiple phases (similar to pytest fixtures)
+        - Types of hooks
+            - `beforeEach(callback)`: `callback` run before each test
+            - `afterEach(callback)`: `callback` run after each test
+            - `before(callback)`: `callback` run before first test
+            - `after(callback)`: `callback` run after first test
+        - Placed in the `describe` block, but outside the `it` blocks
             ```js
-            describe('Math', () => {
-                describe('.methodOne', () => {
-                    it('some description of what the method should do', () -> {
-                        // Test goes here
-                    });
-                    // more it statements to capture method's expected behavior
+            describe('hook illustration', () => {
+                let testValue;
+
+                // Execute before hooks
+                beforeEach(() => {
+                    testValue=5;
                 });
-                describe('.methodTwo', () => {
-                    it('some description of what the method should do', () -> {
-                        // Test goes here
-                    });
-                    // more it statements to capture method's expected behavior
-                });
+
+                // it statements
             });
             ```
-    - `assert`: Provided by Node.js (import at the top of your files with `const assert = require('assert');`)
-        - `assert.ok()`: Checks truthiness
-        - `.equal()`: Checks loose (i.e. `==`) equality
-        - `.strictEqual()`: Checks strict (i.e. `===`) equality
-        - `.deepEqual()`: Checks loose (i.e. `==`) equality for things like objects or arrays (i.e. checks that the attributes of two separate objects are equal)
-        - `.deepStrictEqual()`: Same as above, but checks for strict rather than loose equality
-        - [Additional methods](https://nodejs.org/api/assert.html)
-
-    - Steup, exercise, verify, teardown: Phases of/way to structure testing
-        - Setup: create objects, variables, and set conditions your test depends upon
-        - Exercices: Execute functionality you are testing
-        - Verify: Check expectations against result produced during exercise phase (use `assert` statements)
-        - Teardown: Ensures that the testing environment stays clean to isolate the conditions of the tests.  Involves doing things like deleting any files that were created as part of executing the test
-        - Hooks: help to reduce duplicative code required across multiple phases (similar to pytest fixtures)
-            - Types of hooks
-                - `beforeEach(callback)`: `callback` run before each test
-                - `afterEach(callback)`: `callback` run after each test
-                - `before(callback)`: `callback` run before first test
-                - `after(callback)`: `callback` run after first test
-            - Placed in the `describe` block, but outside the `it` blocks
-                ```js
-                describe('hook illustration', () => {
-                    let testValue;
-
-                    // Execute before hooks
-                    beforeEach(() => {
-                        testValue=5;
-                    });
-
-                    // it statements
-                });
-                ```
-
+- TDD
+    - Red-Green-Refactor: Write tests so that you get a failing test (Red), then write the code so that it passes (Green), and finally improve the passing code (refactor)
+        - You iteratively walk into writing passing code, just updating your code until you get a new error message, not necessarily trying to solve the entire thing
+        - Refactor process
+            - ensure you are following the setup/exercise/verification/teardown phase structure
+    - Use the describe and it blocks to explain the behavior of your code
+    - Code Coverage: amount of application code that has been executed in testing, represented as a percentage.
+        - Function Coverage: Has each function been called?
+        - Statement Coverage: Has each statement been executed?
+        - Path coverage: Has every edge in the control-flow graph been executed?
+        - Condition Coverage: Has each boolean sub-expression evaluated to be both true and false?
+    - Test Coverage: PErcentage of required features/specs that are tested as opposed to lines executed
+### Chai
+It's an assertion library
+- [Docs](https://www.chaijs.com/guide/)
+### Mocking
+- Process of creating fake version of an external service (also known as stubbing - slight technical difference but basically the same thing)
+- Prevents you from having to rely on other services when running your tests - *ISOLATION*
+- Avoid using mocks in integration tests for *INTERNAL SERVICES* - you're TRYING to see that interaction between services
+### Sinon
+- [Docs](https://sinonjs.org/releases/latest/spies/)
+- "Spy" capability
+    - function that observes and records information about another function's calls including arguments, return value, `this` value, and exceptions thrown
+- Implementation: Wrapping methods
+    - Process
+        1. Instantiate the spy based on the class and method that you want to observe
+        2. Call the method
+        3. Conduct "asserts" (e.g. `expect(<class>.<method>.called).to.be.true` or `expect(<class>.<method>.returned('<expected-return-val>')).to.be.true`)
+        4. remove the spy from the wrapped method
+    - Sample code
+        ```js
+        const robot = {
+            greet(name){// Unit being tested
+                return 'Hello ' + name;
+            }
+        };
+        test('greet should return hello codey', () => {
+            sinon.spy(robot, 'greet'); // Initialize the spy (step 1)
+            robot.greet('codey'); // Call the method (Step 2)
+            // Conduct "asserts" (Step 3)
+            expect(robot.greet.called).to.be.true;
+            expect(robot.greet.calledWith('codey')).to.be.true;
+            expect(robot.greet.returned('Hello codey')).to.be.true;
+            robot.greet.restore(); // Remove spy from wrapped method (Step 4)
+        });
+        ```
+## Async JS and HTTP Requests
 ## Web Apps
 ## React Pt. I
 ## React Pt. II
