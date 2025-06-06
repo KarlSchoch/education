@@ -553,8 +553,117 @@ It's an assertion library
         });
         ```
 ## Async JS and HTTP Requests
+- APIs
+    - Components of making a request
+        - HTTP Verbs (basically maps to CRUD)
+            - GET: Retrieve specific resource (by ID) or a collection of resources
+            - POST: create a new resource
+            - PUT: Update a specific resource (by ID)
+            - DELETE: Remove a specific resource by ID
+        - Headers and Accept parameters:
+            - `Accept` field ensures tells the server what format to send the response in.  Options are MIME (Multipurpose Internate Mail Extension) Types that consist of a `type` and `subtype` separated by a `/`.  Example types: `text/html`, `text/css`, `audio/wav`, `audio/mpeg`, `image/png`, `video/mp4`, `application/json`, 
+        - Paths: where to send the request
+    - Sending responses
+        - Header and Content type: Mirrors the `Accept` field in that it indicates the MIME Type being sent over
+        - Response Codes: Status of the request.  Below are the key ones
+            | Status Code | Meaning |
+            | 200 (OK) | Standard response for successful HTTP request (relates to GET and PUT) |
+            | 201 (CREATED) | Standard response after item is successfully created via HTTP request (relates to POST) |
+            | 204 (NO CONTENT) | Success response, nothing returned in the body (relates to DELETE) |
+            | 400 (BAD REQUEST) | Cannot process request due to the request having bad syntax, being too big, etc. |
+            | 403 (FORBIDDEN) | Does not have permission to access the resource.  PRobably a bad token/authentication |
+            | 404 (NOT FOUND) | Resource can't be found.  Probably related to a path |
+            | 500 (INTERNAL SERVER ERROR) | Generic response for unexpected failure without additional detail |
+    - Example request/response pairs
+        - request
+            ```
+            POST http://fashionboutique.com/customers
+            Body:
+            {
+                “customer”: {
+                    “name” = “Scylla Buss”,
+                    “email” = “scylla.buss@codecademy.org”
+                }
+            }
+            ```
+        - response
+            ```
+            201 (CREATED)
+            Content-type: application/json
+
+            ```
+    - You're almost thinking about the API structure as a database Schema.  What put reuqests do you need, what path do they do to, what content do they send/receive back
+- Working with JSON
+    - On the receiving end
+        1. get the JSON data as a string (this is how it will come through the HTTP request)
+        2. use `JSON.parse()` to turn the string-y JSON data into a JavaScript object
+    - On the sending end
+        1. Get the JavaScript object you want to send (i.e. `const jsObj = { book: 'JSON Primer', price: 29.99, inStock: true }`)
+        2. Use `JSON.stringify()` to convert the object to a string that you can send over an HTTP request (i.e. `const jsonData = JSON.stringify(jsObject)`)
+- Additional Resources
+    1. [Making network requests with JS](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Network_requests)
+    2. [REally good video on the Event Loop](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+    3. [Overarching Documentation on Asynchronous JavaScript](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS): Contains elements below that are called out in this, but also section on using workers/introducing threads to deal with long running tasks
+        - [MDN Guide on using promises](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS/Promises)
+    4. [MDN Web API Guide](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Introduction)
+    5. [MDN HTTP overview](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview)
+
 ## Web Apps
+- Web App Definition: does not require installation onto local machine and intended for interaction (i.e. they send data to and receive data from a web server) which is the differentation with a website (which is static)
+- Single PAge Application
+    - Multi-page applications mean that each time you click on a link, there is a round trip to the server with a new HTML file that provides the page content.
+    - Wikipedia definition of SPA: Web application that interacts with the web browser by dynamically rewriting the current web page with new data from a web server, instead of the defauly method of the browser loading entire new pages.
+        - Plain english: you just have one page and you update the individual components of it
+    - Generally use a framework to do this: 
+        - React: Create components that render differently based on state and user data
+        - Vue: Using templating within a single HTML file (seems like Django)
 ## React Pt. I
+### JS Refresher
+```js
+// Define an object/array
+let cars = ['ferrari', 'tesla', 'porsche']
+let destinations = {x: 'LA', y: 'NYC', z: 'MIA'}
+// Normal approach to getting at the attributes
+let car1 = cars[0];
+let car2 = cars[1];
+let car3 = cars[2];
+let destination1 = destinations[0];
+let destination2 = destinations[1];
+let destination3 = destinations[2];
+// Destructuring approach to getting at the attributes (indicate the type - attribute vs. list - by what you do the wrapping with)
+let [car1, car2, car3] = cars
+let {destination1, destination2, destination3} = destinations
+```
+Can do similar thing with destructuring for function parameters
+```js
+let truck = {
+  model: '1977 Mustang convertible',
+  maker: 'Ford',
+  city: 'Detroit',
+  year: '1977',
+  convertible: true
+};
+
+const printCarInfo = ({model, maker, city}) => {
+  console.log(`The ${model}, or ${maker}, is in the city ${city}.`);
+};
+```
+
+### Virtual DOM
+- DOM is the tree like representation of the website
+- Virtual DOM is intended as a way to help detecting changes to the DOM
+    - Copy of the DOM as a JS object
+    - makes things faster by avoiding repainting the page
+- REact process
+    1. Entire virtual DOM gets updated
+    2. Virtual DOM gets compared to version before update and React figures out what has changed
+    3. Changed objects get updated on the *REAL DOM*
+    4. Changes on the real DOM cause the screen to change
+
+### JSX
+
+### React Components
+
 ## React Pt. II
 ## Redux
 ## Git and GitHub Pt. II
