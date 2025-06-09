@@ -661,9 +661,112 @@ const printCarInfo = ({model, maker, city}) => {
     4. Changes on the real DOM cause the screen to change
 
 ### JSX
+- Syntax extension for JS that was intended to be used with React
+- basic building block is an "element"
+- Adding in javascript code to these elements: use curly braces
+    - `root.render(<h1>2 + 2</h1>)` renders "2 + 2" on the screen
+    - `root.render(<h1>{2 + 2}</h1>)` renders "4" on the screen because the curly braces indicate that you want javascript to execute.
+- function basically like HTML elements with attributes (i.e. `const p1 = <p id='p1'>First Paragraph</p>`)
+    - If you take one of these elements into multiple lines, you are going to need to wrap them in parentheses
+    - Can only have one outer most elements
+        - Valid
+            ```js
+            const text = (
+                <div>
+                    <p>Some text<p>
+                    <p>Some text<p>
+                </div>
+            )
+            ```
+        - Invalid
+            ```js
+            const text = (
+                <p>Some text<p>
+                <p>Some text<p>
+            )
+            ```
+    - Grammar differences
+        - `class` in html tag becomes `className` in JSX (class is a reserved word in JS)
+        - self closing tags: need to write the ending slash (e.g. `<br />` is fine but `<br>` is not)
+        - Cannot use if statements inside the js. Here are wome workarounds
+            - Write an if statement that wraps the different jsx elements
+            - Use the ternary operator
+            - `&&` operator: Use when you want something to happen or not (e.g. display some element) - `{ age > 25 && <li>Grappa</li> }`
+        - `.map()` Array method: Allows you to generate content dynamically
+            - Basic Syntax
+                ```
+                const strings = ['Home', 'Shop', 'About Me'];
+                const listItems = strings.map(string => <li>{string}</li>)
+                <ul>{listItems}</ul>
+                ```
+            - Useful for adding keys (`key` is a JSX attribute that is similar to an ID).  KEys are necessary when
+                - You need "memory" from one render to the next (think to do list)
+                - List's order might be shuffled
+            - 
+- Rendering JSX expressions
+    - Process
+        1. import createRoot from react-dom/client (`import { createRoot } from 'react-dom/client'`)
+        2. Capture the container that you want to use to hold the content (`const someContainer = document.getElementById('someContainer')`)
+        3. Create a 'root' (i.e. a new 'root node' within the DOM tree structure) in that container (`const root = createRoot(someContainer)`)
+        4. use root's `.render()` method to render some content within that location (`root.render(<h1>Hello World!</h1>)`)
+            - _Note_ You can pass in a variable to the `.render()` method as long as that variable EVALUATES TO HTML
+    - Notes
+        - `.render()` method only renders things that have changed.
+- Adding in event listeners: use the event as an attribute on the tag (e.g. `onClick`, good list [here](https://react.dev/reference/react-dom/components/common#)).
+- `React.createElement()`
+    - way to create react elements without writing JSX
+    - Arguments: type, props, ...children
+    - Example
+        - JSX: `const h1 = <h1>Hello world</h1>;`
+        - `react.createElement()`: `const h1 = React.createElement("h1", null, "Hello world")`
+
 
 ### React Components
+- imports: `import React from 'react';`  and `import ReactDOM from 'react-dom/client';` (enables DOM interaction)
+- Structure: App.js (top level) and index.js (entry level to the application, only place where you import ReactDOM)
+- Functional components are the standard
+    - PascalCase naming convention: Capitalization is important so that the component is properly flagged
+- USing the components
+    1. Create the component and ensure there is some HTML returned.  Seems to follow pretty basic javascrpt rules with onyl slight wonkiness
+        - If you're creating values to do calculations, they can't come in the return statement.  
+            - Invalid
+                ```js
+                return (
+                    const n = Math.floor(Math.random() * 10 + 1);
+                    <h1>{n}</h1>
+                )
+                ```
+            - Valid
+                ```js
+                const n = Math.floor(Math.random() * 10 + 1);
+                return (
+                    <h1>{n}</h1>
+                )
+                ```
+        - Event handler functions: have convention of `handle<name-of-event>`
+            `<div onHover={handleHover}></div>`
+    2. export the component
+    3. Import component
+    4. Render component (will have HTML-ish syntax: `<MyComponent />`) using the approach of selecting the right element in the dom, creating a root, and then calling `.render()`
+- Vite
+    - Requires node 18+ or 20+
 
 ## React Pt. II
+- Getting compoents to interact with each other
+    - Exporting components from another component
+    - `props`: Passing information from one component to another
+        - access them using dot notation: e.g. `props.name`
+        - pass the props into function arguments from within the "tag" ():
+        ```js
+        // component.js
+        function PropsDisplayer(props) {
+            const stringProps = JSON.stringify(props);
+            return <div>Some div</div>
+        }
+
+        // app.js
+        <PropsDisplayer name="Karl"> // will ensure that props.name = "Karl" and anything else passed in here is available in the PropsDisplayer fucntion
+
+        ```
 ## Redux
 ## Git and GitHub Pt. II
