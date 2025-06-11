@@ -768,5 +768,126 @@ const printCarInfo = ({model, maker, city}) => {
         <PropsDisplayer name="Karl"> // will ensure that props.name = "Karl" and anything else passed in here is available in the PropsDisplayer fucntion
 
         ```
+        - PAssing propse to a different component
+            - Top to bottom, partent to child
+            - Props passed down are immutable
+        - you can pass functions as props (think event handler functions): 
+            - attribute name: use the event name (e.g. `onClick` or `onHover`)
+            - attribute value: enclose the function within curly braces
+            - when you define the function, the name should correspond to the event type along with a `handle`.  Using these special values automatically creates an event lsitener as long as they are the HTML-like JSX instance NOT an instance of the component
+                - name of the function: `handleClick`
+                - name of the attribute: `onClick`
+                - value of the attribute: name of the function (aka `handleClick`)
+                    ```js
+                    // some-component.js
+                    function someComponent(props) {
+                        // Creates the onClick as an event listener and the event handler is passed in as a prop
+                        return <button onClick={props.onClick}>Test Button</button>
+                    }
+                    export default someComponent;
+                    // another-file.js
+                    import someComponent from './some-component'
+
+                    function anotherComponent() {
+                        function handleClick() {
+                            // eventHanlder function code
+                        }
+                        // Does not create the event listener (it's a class), just ordinary prop name that tells what the event handler is
+                        return <Button onClick={handleClick}/>
+                    }
+
+                    ```
+        - `props.children`:
+            - Allows you to use the HTML structure within the place where the component is invoked to provide arguments
+            - For instance, in the below situation, the two `<li>` elements become accessible in the `<List>` component as `props.children`
+                ```js
+                <List>
+                    <li>Some Item</li>
+                    <li>Another Item</li>
+                </List>
+                ```
+        - Adding Default values
+            1. Setting `.defaultProps`
+                ```js
+                function someComponent(props) {
+                    return <p>{props.text}</p>
+                }
+                someComponent.defaultProps = {
+                    text: 'Default text value',
+                }
+                ```
+            2. Function definition
+                ```js
+                function someComponent({text='Default text value'}) {
+                    return <p>{text}</p>
+                }
+                ```
+            3. Function body
+                ```js
+                function someComponent(props) {
+                    const text='Default text value';
+                    return <p>{text}</p>
+                }
+                ```
+- REact DEv Tools
+    - Install as a chrome extensionWill show up in the same location as chrome dev tools, but there will be two React specific tabs: Components and Profiler.
+    - Allows you to directly modify rendered react components ala css
+    - [Tutorial](Shttps://react-devtools-tutorial.vercel.app/)
+- Hooks
+    - functions that manage internal state of components  and post-rendering side effects (i.e. decide what to show the user based on state)
+    - Built ins: `useState()`, `useEffect()`, `useContext()`, `useReducer()`, `useRef()`,
+        - `state` hook:
+            - import statement: `import { useState } from 'react';`
+            - initializing values: `const [currentState, setCurrentState] = useState();`
+                - `currentState`: current value 
+                - `setCurrentState`: function to update the value of the state
+                - _Note_ This does not have to use the `state` term.  If can be anything else like `toggle` or `count`
+            - Use these functions (aka state setters) as the event handler for an event listener
+                - Example: 
+                    ```js
+                    <button onClick={() => setCurrentState("On")}>On</button>
+                    <button onClick={() => setCurrentState("Off")}>Off</button>
+                    ```
+            - Initialize state: `const [currentState, setCurrentState] = useState(true);`
+            - Updating state: Maps process to example code
+                - Process
+                    1. Create the variable and the setter function with useState(), setting an initial value as necessary
+                    2. Add the value of the variable to a JSX element
+                    3. Use the setter function within a handle<Something> function definition
+                    4. add that handler function as an attribute to the JSX element so that the value changes
+                - Example Code
+                    ```js
+                    export default function EmailTextInput() {
+                        const [email, setEmail] = useState(''); // Step 1
+                        const handleChange = ({target}) => setEmail(target.value); // Step 3
+
+                        return (
+                            <input value={email} onChange={handleChange} /> // Steps 2 and 4
+                        );
+                    }
+                    ```
+            - Updating state with a previous value
+                1. define your state setter/event handler so that it takes a previous value (i.e. `const increment = () => setCount(prevCount => prevCount + 1);`)
+            - Updating arrays
+                1. Initialize the Array with useState.  This allows the setCart function to see the current value of the array
+                    - `const [cart, setCart] = useState([]);`
+                2. Associate that callback function with an event listener in the JSX element, passing in some value that you want the callback function to have access to (for instance the index value that you are interested in doing some comparison against)
+                    ```js
+                    <li onClick={() => removeItem(index)}>
+                    ```
+                3. Define a callback function that uses `setCart` and utilize the previous value of cart (`prev`) as well as the argument that was passed in from the JSX element (`tgtIndex`)
+                    ```js
+                    const removeItem = (tgtIndex) => {
+                        setCart((prev) => {
+                            return prev.filter(
+                                (item, index) => {
+                                    index !== tgtIndex
+                                }
+                            )
+                        });
+                    }
+                    ```
+
+
 ## Redux
 ## Git and GitHub Pt. II
