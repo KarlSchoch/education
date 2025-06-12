@@ -871,7 +871,7 @@ const printCarInfo = ({model, maker, city}) => {
             - Updating arrays
                 1. Initialize the Array with useState.  This allows the setCart function to see the current value of the array
                     - `const [cart, setCart] = useState([]);`
-                2. Associate that callback function with an event listener in the JSX element, passing in some value that you want the callback function to have access to (for instance the index value that you are interested in doing some comparison against)
+                2. Associate that callback function with an event listener in the JSX element, passing in some value that you want the callback function to have access to (for instance the index value that you are interested in doing some comparison against).  You don't pass the index as part of `onClick` since that is already in scope and that `onClick` is actually receiving an event object
                     ```js
                     <li onClick={() => removeItem(index)}>
                     ```
@@ -887,7 +887,56 @@ const printCarInfo = ({model, maker, city}) => {
                         });
                     }
                     ```
+        - `effect` Hook
+            - Intent: Execute some *further* action (fetch data from backend, make changes to the DOM) when something happens to the component throughout it's lifetime (e.g. when you change the state of a component by typing something into a text input box, you fetch data from a backend service based on those inputs)
+            - Execution
+                1. You create a callback function
+                    ```js
+                    useEffect(() => {
+                        (prev) => prev + 1;
+                    });
+                    ```
+                2. Add some cleanup function that specifies what happens AFTER you execute the Effect hook so that (for instance) if you are adding event listeners you don't clutter things up
+                    ```js
+                    const increment = () => {
+                        setCount((prev) => prev + 1)
+                    }
 
+                    useEffect(() => {
+                        document.addEventListener('keydown', increment);
+                        return () => document.removeEventListener('keydown', increment)
+
+                    });
+                    ```
+                3. Control when your effect gets called with dependency arrays to ensure that it only executes when you some condition you specify is met (for instance a counter value changes)
+                    ```js
+                    useEffect(() => {
+                        document.addEventListener('keydown', increment);
+                        return () => document.removeEventListener('keydown', increment)
+
+                    }, [] // Where you add the dependency array
+                    );
+                    ```
+                    - [] as the dependency array tells you to only execute the effect initially whereas passing in variables will tell it to monitor what is happening with that value and rerender accordingly
+        - Rules of Hooks
+            1. Only call Hooks at the top level: Basically, don't hide hooks within conditionals or loops.  You can do the same thing by embedding the conditional within the Hook
+                - Instead of this
+                    ```js
+                    if (username !== '') {
+                        useEffect(() => {
+                            localStorage.setItem('savedUserName', username);
+                        })
+                    };
+                    ```
+                - Do this
+                    ```js
+                    useEffect(() => {
+                        if (username != '') {
+                            localStorage.setItem('savedUsername', username);
+                        }
+                    })
+                    ```
+            2. Only call hooks from React functions
 
 ## Redux
 ## Git and GitHub Pt. II
