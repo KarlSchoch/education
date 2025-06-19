@@ -28,6 +28,6 @@ Layout
     - 
 
 Data Flow
- `Playlist` -> `Tracklist` -> List of x `Tracks`
+ `Playlist` (name, list of playlist tracks) -> `Tracklist` -> List of x `Tracks`
 
- SearchBar -> SearchResults -> 
+ SearchBar -> searchTracks (state variable) -> SearchResults -> Can add a list of tracks to 

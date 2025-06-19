@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Track() {
+function Track({track}) {
   return (
     <div style={{ padding: '0.5rem 0', borderBottom: '1px solid #eee' }}>
-      <div><strong>Song Title</strong></div>
-      <div>Artist Name</div>
-      <div>Album Name</div>
+      <div><strong>{track.title}</strong></div>
+      <div>{track.artist}</div>
+      <div>{track.album}</div>
     </div>
   )
 }
