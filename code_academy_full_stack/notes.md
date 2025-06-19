@@ -937,6 +937,10 @@ const printCarInfo = ({model, maker, city}) => {
                     })
                     ```
             2. Only call hooks from React functions
+-   Patterns
+    - Separte stateful (aka container) and presentational components
+    - to pass state from the presentational to the container function, you use a change handler function.
+
 
 ## Redux
 ## Git and GitHub Pt. II
