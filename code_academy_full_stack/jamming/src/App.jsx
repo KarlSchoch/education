@@ -6,6 +6,7 @@ import SearchBar from './components/SearchBar'
 import SearchResults from './components/SearchResults'
 import Playlist from './components/Playlist'
 
+
 // App component
 function App() {
   return (
