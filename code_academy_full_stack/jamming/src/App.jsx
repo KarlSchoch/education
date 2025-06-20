@@ -37,14 +37,19 @@ const trackDummy = [
 
 // App component
 function App() {
-  const [playlistTracklist, setPlaylistTracklist] = useState(trackDummy);
+  const [playlistTracklist, setPlaylistTracklist] = useState([{
+    title: 'Song 1',
+    artist: 'Artist 1',
+    album: 'Album 1',
+  }]);
   const [playlistName, setPlaylistName] = useState('Dummy');
+  const [searchResults, setSearchResults] = useState(trackDummy);
 
   return (
     <div className="container">
       <div id="search-column">
         <SearchBar />
-        <SearchResults />
+        <SearchResults results={searchResults} />
       </div>
       <Playlist tracklist={playlistTracklist} name={playlistName}/>
     </div>
