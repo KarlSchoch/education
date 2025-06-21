@@ -1,7 +1,7 @@
 import React from 'react'
 import Track from './Track'
 
-function Tracklist({ list, searchResult }) {
+function Tracklist({ list, searchResult, onAddTrack, onRemoveTrack }) {
 
     if (!list) return null;
 
@@ -9,7 +9,10 @@ function Tracklist({ list, searchResult }) {
         <Track 
             key={`${el.title}-${el.artist}`} 
             track={el} 
-            searchResult={searchResult} />
+            searchResult={searchResult}
+            onAddTrack={onAddTrack}
+            onRemoveTrack={onRemoveTrack}
+        />
     )
 
     return (

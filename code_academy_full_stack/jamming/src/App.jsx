@@ -46,37 +46,32 @@ function App() {
   const [searchResults, setSearchResults] = useState(trackDummy);
 
   function handleAddTrack(newTrack) {
-    console.log(`Initial playlist: ${playlistTracklist}`)
     setPlaylistTracklist(prev => {
       if (prev.some(track => track.title === newTrack.title && track.artist === newTrack.artist)) {
-        console.log("Track already exists in playlist")
         return prev
       }
-      console.log("Adding track to playlist")
       return [...prev, newTrack]
     });
   }
 
-  // console.log("* Calling handleAddTrack with new song *")
-  // handleAddTrack({
-  //   title: 'Song 2',
-  //   artist: 'Artist 2',
-  //   album: 'Album 2',
-  // })
-  // console.log("* Calling handleAddTrack with song already in playlist *")
-  // handleAddTrack({
-  //   title: 'Song 1',
-  //   artist: 'Artist 1',
-  //   album: 'Album 1',
-  // })
+  function handleRemoveTrack(removalTrack) {
+    console.log("successfully passed this down")
+  }
 
   return (
     <div className="container">
       <div id="search-column">
         <SearchBar />
-        <SearchResults results={searchResults} />
+        <SearchResults 
+          results={searchResults} 
+          onAddTrack={handleAddTrack}
+        />
       </div>
-      <Playlist tracklist={playlistTracklist} name={playlistName}/>
+      <Playlist 
+        tracklist={playlistTracklist} 
+        name={playlistName}
+        onRemoveTrack={handleRemoveTrack}
+      />
     </div>
   )
 }
