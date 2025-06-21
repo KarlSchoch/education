@@ -55,7 +55,9 @@ function App() {
   }
 
   function handleRemoveTrack(removalTrack) {
-    console.log("successfully passed this down")
+    setPlaylistTracklist(prev => {
+      return prev.filter((el) => el.title !== removalTrack.title && el.artist !== removalTrack.artist);
+    })
   }
 
   return (
