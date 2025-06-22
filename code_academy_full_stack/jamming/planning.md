@@ -50,3 +50,12 @@ Process
 2. Replace the contents of playlistTracklist with an empty list
 3. Display the search results
 4. Add button to search results for adding in song
+
+
+# 4. Savings playlist to user's account
+
+Tasks
+- [x] Add `uri` to the track object
+- [] Create save button that triggers some event to 
+    - [] Send the uris of the tracks in the playlist to Spotify
+    - [] Clear the existing state of the playlist
