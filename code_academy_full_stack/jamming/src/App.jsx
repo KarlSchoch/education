@@ -46,6 +46,7 @@ function App() {
     title: 'Song 1',
     artist: 'Artist 1',
     album: 'Album 1',
+    uri: 'spotify:track:6SIV02mskzzc3KXK7t4NHj'
   }]);
   const [playlistName, setPlaylistName] = useState('Enter Playlist Name');
   const [searchResults, setSearchResults] = useState(trackDummy);
@@ -68,7 +69,11 @@ function App() {
     setPlaylistName(e.target.value);
   }
   function handleSavePlaylist() {
-    console.log("triggered handleSavePlaylist")
+    // Extract URIs from existing playlist
+    let playlistUris = playlistTracklist.map(track => track.uri);
+    // Reset the playlistTracklist
+    setPlaylistTracklist([])
+    setPlaylistName('Enter Playlist Name')
   }
 
   return (
