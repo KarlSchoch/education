@@ -42,7 +42,7 @@ function App() {
     artist: 'Artist 1',
     album: 'Album 1',
   }]);
-  const [playlistName, setPlaylistName] = useState('Dummy');
+  const [playlistName, setPlaylistName] = useState('Enter Playlist Name');
   const [searchResults, setSearchResults] = useState(trackDummy);
 
   function handleAddTrack(newTrack) {
@@ -60,6 +60,10 @@ function App() {
     })
   }
 
+  function handlePlaylistNameChange(e) {
+    setPlaylistName(e.target.value);
+  }
+
   return (
     <div className="container">
       <div id="search-column">
@@ -72,6 +76,7 @@ function App() {
       <Playlist 
         tracklist={playlistTracklist} 
         name={playlistName}
+        onPlaylistNameChange={handlePlaylistNameChange}
         onRemoveTrack={handleRemoveTrack}
       />
     </div>
