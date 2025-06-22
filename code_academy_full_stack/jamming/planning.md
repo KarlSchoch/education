@@ -56,6 +56,18 @@ Process
 
 Tasks
 - [x] Add `uri` to the track object
-- [] Create save button that triggers some event to 
-    - [] Send the uris of the tracks in the playlist to Spotify
-    - [] Clear the existing state of the playlist
+- [x] Create save button that triggers some event to 
+    - [x] Send the uris of the tracks in the playlist to Spotify
+    - [x] Clear the existing state of the playlist
+
+# 5. Spotify API access
+
+Thinking
+- Where should this token work be happening?  IMO this should all be contained within the Playlist, so we import the module into the playlist and have the playlist control the state of the token
+- What does the module consist of
+    - input w/ label that has 
+    - handleTokenChange function (onChange)
+
+Tasks
+1. Create module file/folder and successfuly import module so that it executes some task from within the playlist component (e.g. alert)
+2. Add in changeHandler Function to the `Playlist` component
