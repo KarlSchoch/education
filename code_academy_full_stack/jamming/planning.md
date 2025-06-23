@@ -65,8 +65,11 @@ Tasks
 Thinking
 - Where should this token work be happening?  IMO this should all be contained within the Playlist, so we import the module into the playlist and have the playlist control the state of the token
 - What does the module consist of
-    - input w/ label that has 
+    - input w/ label that has the client ID
+    - login with Spotify button that calls for the token
     - handleTokenChange function (onChange)
+
+
 
 Tasks
 1. Create module file/folder and successfuly import module so that it executes some task from within the playlist component (e.g. alert)

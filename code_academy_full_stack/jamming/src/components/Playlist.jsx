@@ -9,10 +9,6 @@ function Playlist({
     onPlaylistNameChange,
     onSavePlaylist
 }) {
-    const [userToken, setUserToken] = useState('');
-    function handleUserTokenChange(e) {
-        setUserToken(e.target.value);
-    }
 
     return (
         <div style={{ background: '#f0f0f0', padding: '1rem', minHeight: '300px' }}>
@@ -22,8 +18,10 @@ function Playlist({
                 </label>
             </h2>
             <hr />
+            <h2 style={{ marginBottom: 0, marginTop: 0 }}>Spotify Login</h2>
+            <SpotifyAuth />
+            <hr />
             <h2 style={{ marginBottom: 0, marginTop: 0 }}>Save Playlist</h2>
-            <SpotifyAuth onUserTokenChange={handleUserTokenChange} />
             <button name="savePlaylist" onClick={onSavePlaylist}>Save Playlist</button>
             <hr />
             <h2 style={{marginBottom: 0, marginTop: 0}}>Tracklist</h2>
