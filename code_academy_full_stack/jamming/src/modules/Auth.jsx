@@ -50,8 +50,9 @@ function SpotifyAuth() {
         if (isSpotifyTokenExpired()) {
             localStorage.removeItem('spotifyAccessToken');
             localStorage.removeItem('spotifyAccessTokenExpiresAt');
+            alert('Token expired.  Please re-authenticate into Spotify.')
         } else {
-            console.log('Spotify access token still valid');
+            window.history.replaceState({}, document.title, REDIRECT_URI);
         }
     }, [])
 
@@ -63,7 +64,6 @@ function SpotifyAuth() {
         // Geneate code challenge
         const codeChallenge = await generateCodeChallenge(verifier);
         // Conduct get request to authenticate
-        console.log(`client id: ${CLIENT_ID}`)
         const params = {
             response_type: 'code',
             client_id: CLIENT_ID,
@@ -102,6 +102,8 @@ function SpotifyAuth() {
             // Calculate expiration timestap
             const expiresAt = Date.now() + response.expires_in * 1000;
             localStorage.setItem('spotifyAccessTokenExpiresAt', expiresAt);
+            // Clear URL
+            window.history.replaceState({}, document.title, REDIRECT_URI);
         }
     }
 
