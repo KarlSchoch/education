@@ -37,8 +37,23 @@ async function generateCodeChallenge(codeVerifier) {
     const base64url = base64encode(hashed)
     return base64url;
 }
+// 6. Create helper function to determine whether the function is expired
+function isSpotifyTokenExpired() {
+    const expiresAt = localStorage.getItem('spotifyAccessTokenExpiresAt');
+    if (!expiresAt) return true;
+    return Date.now() > Number(expiresAt);
+}
 
 function SpotifyAuth() {
+
+    useEffect(() => {
+        if (isSpotifyTokenExpired()) {
+            localStorage.removeItem('spotifyAccessToken');
+            localStorage.removeItem('spotifyAccessTokenExpiresAt');
+        } else {
+            console.log('Spotify access token still valid');
+        }
+    }, [])
 
     // 3. Write handleLogin function that pulls in url code
     async function handleLogin() {
@@ -84,6 +99,9 @@ function SpotifyAuth() {
 
         if (response.access_token) {
             localStorage.setItem('spotifyAccessToken', response.access_token)
+            // Calculate expiration timestap
+            const expiresAt = Date.now() + response.expires_in * 1000;
+            localStorage.setItem('spotifyAccessTokenExpiresAt', expiresAt);
         }
     }
 
@@ -97,9 +115,11 @@ function SpotifyAuth() {
         } 
     });
 
+    const isLoggedIn = localStorage.getItem('spotifyAccessToken') && !isSpotifyTokenExpired();
+
     return (
         <div>
-            {!localStorage.getItem('spotifyAccessToken') ? (
+            {!isLoggedIn ? (
                 <button onClick={handleLogin}>Login with Spotify</button>
             ) : (
                 <div>
