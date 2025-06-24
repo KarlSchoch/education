@@ -75,11 +75,30 @@ function App() {
     setPlaylistTracklist([])
     setPlaylistName('Enter Playlist Name')
   }
+  async function handleSongSearch(query) {
+    console.log(`Searching for the following song: ${query}`);
+    // Pull in token from local storage
+    const token = localStorage.getItem('spotifyAccessToken');
+    // Define query parameters
+    const data = new URLSearchParams({
+      q: query,
+      type: 'track',
+      market: 'US',
+      limit: 10,
+    })
+    // Execute search
+    const result = await fetch(`https://api.spotify.com/v1/search/?${data.toString()}`, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}`}
+    })
+    console.log(result.json())
+  }
+
 
   return (
     <div className="container">
       <div id="search-column">
-        <SearchBar />
+        <SearchBar onSearch={handleSongSearch} />
         <SearchResults 
           results={searchResults} 
           onAddTrack={handleAddTrack}

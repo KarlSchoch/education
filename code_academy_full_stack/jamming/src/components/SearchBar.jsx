@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-function SearchBar() {
+function SearchBar({ onSearch }) {
+
+  const [searchQuery, setSearchQuery] = useState('');
+  function handleSearchQueryChange(e) {
+    setSearchQuery(e.target.value)
+  }
+
   return (
     <div>
-      <input type="text" placeholder="Search for a song" />
+      <label htmlFor="searchBox">Search for a Song: </label>
+      <input name="searchBox" id="searchBox" type="text" value={searchQuery} onChange={handleSearchQueryChange} />
+      <button name="songSearch" id="songSearch" onClick={() => onSearch(searchQuery)}>Search for the song</button>
     </div>
   )
 }
