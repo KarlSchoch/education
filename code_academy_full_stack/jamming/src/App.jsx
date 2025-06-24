@@ -7,39 +7,6 @@ import SearchResults from './components/SearchResults'
 import Playlist from './components/Playlist'
 
 
-const trackDummy = [
-  {
-    title: 'Song 1',
-    artist: 'Artist 1',
-    album: 'Album 1',
-    uri: 'spotify:track:6SIV02mskzzc3KXK7t4NHj'
-  },
-  {
-    title: 'Song 2',
-    artist: 'Artist 2',
-    album: 'Album 2',
-    uri: 'spotify:track:2dRPQFwPqAmc42mDRnsDQu'
-  },
-  {
-    title: 'Song 3',
-    artist: 'Artist 3',
-    album: 'Album 3',
-    uri: 'spotify:track:53LwBS4bovyljsMlLqGfd6'
-  },
-  {
-    title: 'Song 4',
-    artist: 'Artist 4',
-    album: 'Album 4',
-    uri: 'spotify:track:0vvG0VEN6l2fbIEUtq3mQD'
-  },
-  {
-    title: 'Song 5',
-    artist: 'Artist 5',
-    album: 'Album 5',
-    uri: 'spotify:track:3PRTKWFigJCi47YAEsBpiP'
-  },
-]
-
 // App component
 function App() {
   const [playlistTracklist, setPlaylistTracklist] = useState([]);
@@ -63,15 +30,75 @@ function App() {
   function handlePlaylistNameChange(e) {
     setPlaylistName(e.target.value);
   }
-  function handleSavePlaylist() {
+  async function handleSavePlaylist() {
+    // Data Validation: Send alert and return if you meet the following conditions
+    // User has not entered a playlist name or playlist tracks
+    if (playlistTracklist == [] | playlistName === '' | playlistName === 'Enter Playlist Name' ) {
+      alert("Please ensure that songs are added to the playlist and that it has a valid name")
+      return
+    }
+    // TO DO: This is a duplicate playlist
+
+    // Get token from local storage
+    const token = localStorage.getItem('spotifyAccessToken');
     // Extract URIs from existing playlist
     let playlistUris = playlistTracklist.map(track => track.uri);
+    // Pull user id: https://api.spotify.com/v1/me
+    let userID;
+    let data;
+    let response;
+    let errorResponse;
+    try {
+      // Fetch data
+      response = await fetch('https://api.spotify.com/v1/me', {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}`}
+      });
+      // Check if response is successful
+      if (!response.ok) {
+        errorResponse = await response.json()
+        throw new Error(`Failed to fetch user info. ${errorResponse.error.status}: ${errorResponse.error.message}`)
+      };
+      // Parse JSON respone
+      data = await response.json()
+      userID = data.id;
+    } catch (error) {
+      console.error('Error occured during data fetching', error);
+      return
+    }
+    // Create new playlist: /v1/users/{user_id}/playlists; Add playlist name in the body of the POST request
+    try {
+      // Execute fetch
+      response = await fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
+        method: 'POST',
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: playlistName,
+          public: false,
+        })
+      });
+      // Check if response is successful
+      if (!response.ok) {
+        console.log('had issue with the fetch')
+        errorResponse = await response.json()
+        throw new Error(`Failed to fetch user info. ${errorResponse.error.status}: ${errorResponse.error.message}`)
+      };
+      data = await response.json()
+      console.log(`Playlist create response: ${data}`)
+
+    } catch (error) {
+      console.log('Error occured while creating playlist', error)
+      return
+    }
+    // Add new tracks to the playlist: //v1/users/{user_id}/playlists/{playlist_id}/tracks; list of track ids in request body.
     // Reset the playlistTracklist
     setPlaylistTracklist([])
     setPlaylistName('Enter Playlist Name')
   }
   async function handleSongSearch(query) {
-    console.log(`Searching for the following song: ${query}`);
     // Pull in token from local storage
     const token = localStorage.getItem('spotifyAccessToken');
     // Define query parameters
