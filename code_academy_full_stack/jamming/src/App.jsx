@@ -42,14 +42,9 @@ const trackDummy = [
 
 // App component
 function App() {
-  const [playlistTracklist, setPlaylistTracklist] = useState([{
-    title: 'Song 1',
-    artist: 'Artist 1',
-    album: 'Album 1',
-    uri: 'spotify:track:6SIV02mskzzc3KXK7t4NHj'
-  }]);
+  const [playlistTracklist, setPlaylistTracklist] = useState([]);
   const [playlistName, setPlaylistName] = useState('Enter Playlist Name');
-  const [searchResults, setSearchResults] = useState(trackDummy);
+  const [searchResults, setSearchResults] = useState([]);
 
   // Event handler functions
   function handleAddTrack(newTrack) {
@@ -87,11 +82,20 @@ function App() {
       limit: 10,
     })
     // Execute search
-    const result = await fetch(`https://api.spotify.com/v1/search/?${data.toString()}`, {
+    const results = await fetch(`https://api.spotify.com/v1/search/?${data.toString()}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}`}
     })
-    console.log(result.json())
+      .then(res => res.json())
+      .then(res => res.tracks.items.map(el => ({
+          'uri': el.uri,
+          'name': el.name,
+          'album': el.album.name,
+          'artist': el.artists[0].name,
+        }))
+      )
+
+    setSearchResults(results);
   }
 
 

@@ -7,7 +7,7 @@ function Tracklist({ list, searchResult, onAddTrack, onRemoveTrack }) {
 
     const tracks = list.map(el => 
         <Track 
-            key={`${el.title}-${el.artist}`} 
+            key={`${el.title}-${el.artist}-${el.album}`} 
             track={el} 
             searchResult={searchResult}
             onAddTrack={onAddTrack}
