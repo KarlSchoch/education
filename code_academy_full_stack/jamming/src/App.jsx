@@ -48,6 +48,12 @@ function App() {
     let data;
     let response;
     let errorResponse;
+    let playlistID;
+    const limit = 50;
+    let offset = 0;
+    let hasNextPage = true;
+    let playlistNames = []
+
     try {
       // Fetch data
       response = await fetch('https://api.spotify.com/v1/me', {
@@ -66,6 +72,70 @@ function App() {
       console.error('Error occured during data fetching', error);
       return
     }
+
+    // View the users playlists
+    //   - If the name already exists, pull that playlist ID
+    //   - Otherwise, create a new playlist
+    try {
+      
+      while (hasNextPage) {
+        let apiUrl = `https://api.spotify.com/v1/users/${userID}/playlists?limit=${limit}&offset=${offset}`;
+        response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Error Status: ${response}; Error message ${response.message}`)
+        }
+
+        // Extract playlist names from the response
+        data = await response.json()
+        playlistNames += data.items.map((el) => {
+          if (el.name === playlistName) {
+            alert(`${playlistName} already exists as a user playlist`);
+            throw new Error(`${playlistName} already exists as a user playlist`);
+          }
+          return el.name;
+        });        
+
+        // Check to see if you need to make additional calls to the playlist
+        if (data.next) {
+          offset += limit;
+        } else {
+          hasNextPage = false;
+        }
+      }
+
+    } catch(error) {
+      console.log(`Fetch error pulling list of user playlists: ${error.message}`)
+      return
+    }
+
+    try {
+      response = await fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!response.ok) {
+        errorResponse = await response.json();
+        throw new Error(`Failed to fetch playlists. ${errorResponse.error.status}: ${errorResponse.error.message}`);
+      }
+      data = await response.json();
+      const existingPlaylist = data.items.find(
+        playlist => playlist.name === playlistName
+      );
+      if (existingPlaylist) {
+        playlistID = existingPlaylist.id;
+        // Optionally, you could skip playlist creation below if you want to only add tracks to existing playlist
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching playlists', error);
+      return;
+    }
+
     // Create new playlist: /v1/users/{user_id}/playlists; Add playlist name in the body of the POST request
     try {
       // Execute fetch
@@ -82,21 +152,41 @@ function App() {
       });
       // Check if response is successful
       if (!response.ok) {
-        console.log('had issue with the fetch')
         errorResponse = await response.json()
         throw new Error(`Failed to fetch user info. ${errorResponse.error.status}: ${errorResponse.error.message}`)
       };
+      // Pull the Playlist ID out of the response to pass to next API Call
       data = await response.json()
-      console.log(`Playlist create response: ${data}`)
+      playlistID = data.id;
 
     } catch (error) {
       console.log('Error occured while creating playlist', error)
       return
     }
+
     // Add new tracks to the playlist: //v1/users/{user_id}/playlists/{playlist_id}/tracks; list of track ids in request body.
-    // Reset the playlistTracklist
-    setPlaylistTracklist([])
-    setPlaylistName('Enter Playlist Name')
+    try {
+      response = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
+        method: 'POST',
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uris: playlistUris
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error!  Status: ${response.status}`)
+      }
+
+      // Reset the playlistTracklist
+      setPlaylistTracklist([])
+      setPlaylistName('Enter Playlist Name')
+    } catch (error) {
+      console.log('Fetch error adding playlists to track', error.message)
+    }
   }
   async function handleSongSearch(query) {
     // Pull in token from local storage

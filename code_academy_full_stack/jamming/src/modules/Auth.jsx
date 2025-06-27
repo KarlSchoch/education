@@ -4,7 +4,7 @@ import React, {useState, useEffect } from "react";
 // 1. Set Spotify related inputs
 const REDIRECT_URI = "http://127.0.0.1:5173/callback"; // Change to your app's URL
 const AUTH_ENDPOINT = new URL("https://accounts.spotify.com/authorize");
-const SCOPES = "playlist-modify-public playlist-modify-private user-read-private user-read-email";
+const SCOPES = "playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative user-read-private user-read-email";
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 // 2. Create cryptographic infrastructure
 // ORDERING: 
