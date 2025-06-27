@@ -940,7 +940,7 @@ const printCarInfo = ({model, maker, city}) => {
 -   Patterns
     - Separte stateful (aka container) and presentational components
     - to pass state from the presentational to the container function, you use a change handler function.
-
+- Technical Design Doc Template: Adds in feature request template
 
 ## Redux
 ## Git and GitHub Pt. II
