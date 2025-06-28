@@ -941,6 +941,101 @@ const printCarInfo = ({model, maker, city}) => {
     - Separte stateful (aka container) and presentational components
     - to pass state from the presentational to the container function, you use a change handler function.
 - Technical Design Doc Template: Adds in feature request template
+### Deploy a React Application with Netlify
+### React Router
+- Routing: how a web application uses current browser URL to determine what content to show a user
+    - https://codeacademy.com/articles?search=node
+        - Protocol: `https`
+        - Domain: `codeacademy.com`
+        - Path: `/articles`
+        - Query: `?search=node`
+    - Different views of the applications (aka routes) are just React components
+        ```js
+        import { RouterProvider, createBrowserRouter, createRoutesFromElement } from 'react-router-dom';
+        // RouterProvider prevents URL changes from causing the page to reload - URL changes allow router to determine which route to render
+        const router = createBrowserRouter(createRoutesFromElement(
+            <Route path="/" element={ <Root/> }>
+                {/* Add Routes here if you want nested routes*/}
+            </Route>
+            // Dynamc route
+            <Route path = '/articles/:title' element={ <Article/>}/ >
+        ));
+
+        export default function App () {
+            return (
+                <RouterProvider router={ router } />
+            );
+        }
+        ```
+    - `<Link />` and `<NavLink>` have similar capabilities to an anchor tag but they don't force a page reload
+        - NavLink vs. Link: NavLink will automatically have an `active` class applied to it (shows what page you are on)
+    - Dynamic Routes: Done by passing in `:some-variable` to the route
+        - These variables can then be accessed within the component via `useParams()`;
+            ```js
+            import { Link, useParams } from 'react-router-dom';
+            
+            export default function someComponent() {
+                let { title } = useParams();
+                ...
+            }
+            ```
+        - Nested routes: Use when you want content to render together.  CAn also be used when you want to use the url to indicate that you want to render some child content (e.g. when you hit an `edit` link, you want the edit form to show up)
+            - Appends the paths automatically with a `/` between them
+            - Process
+                1. Nest the routes appropriately within the router
+                2. (for child content) use the `Outlet` component from `react-router-dom` to indicate where to put the child content (It is literally an "outlet" for the content)
+                3. Ensure that the path for the nested route matches the name of the destructured variable that you pull out of the nested component (i.e. if you pass in `:name` to the `<Route />`, make sure that your variable is `name`)
+        - Redirect/`<Navigate />`
+            - Used to take users to a certain url if a condition is met
+            - `useNavigate` is a hook that performs similar functionality more quickly
+                ```js
+                import { useNavigate } from 'react-router-dom'
+
+                export default someFunction() {
+                    const navigate = useNavigate();
+
+                    function someHandlerFunction() {
+                        // Perform some actions
+                        // Call navigate to go somewher 
+                        navigate('/profile');
+                    }
+
+                    // More code
+                }
+                ```
+        - Query Parameters: Hook from
+            - Using
+                ```js
+                // 1. Import the package
+                import { useSearchParams } from 'react-router-dom';
+                export default someFunction() {
+                    // 2. instatiate state variables
+                    const [searchParams, setSearchParams] = useSearchParams();
+                    // 3. Extract search params into usable variable
+                    const sortOrder = searchParams.get('order')
+                    // ... Use the variables
+                }
+
+                ```
+            - Creating
+                ```js
+                // 1. Import the package
+                import { useNavigate, createSearchParams } from 'react-router-dom';
+
+                export default someFunction() {
+                    // Preamble: Create the navigate function to consume the search params
+                    const naviated = useNavigate();
+                    // 1. Define the params as a regular variable
+                    const searchQueryParams = { order: 'ASC' };
+                    // 2. package the params as a search string
+                    const searchQueryString = createSearchParams(searchQueryParams);
+                    // 3. Consume the params
+                    navigate({
+                        pathname:'/list',
+                        search:`?${searchQueryString}`,
+                    })
+                }
+                ```
 
 ## Redux
 ## Git and GitHub Pt. II

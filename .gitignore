@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+/code_academy_full_stack/react-router/node_modules/*
+
 # C extensions
 *.so
 
