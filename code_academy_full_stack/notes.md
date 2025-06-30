@@ -1054,6 +1054,99 @@ const printCarInfo = ({model, maker, city}) => {
             1. Indicate the parameter within the route with `:` `<Route to='client/:id'/>`
             2. Pull those out using the search params
             3. Define the component that creates the search params using the `createSearchParams`
+### Jest
+[Jest Documentation](https://jestjs.io/docs/en/tutorial-react): Jest is the overall testing library
+[Enzyme Documentation](https://enzymejs.github.io/enzyme/): Used for simulating the frontend
+[Jest Walkthrough Article](https://www.valentinog.com/blog/jest/)
+1. Create folder called `__tests__`
+2. test file format: `__tests__/<entityToBeTests>.spec.js`
+3. Structuring the tests
+    ```js
+    describe("some text explaining the element beind tested", () => {
+        test("explanation of what this specific test case looks at", () => {
+            // Setup: Define the inputs and expected outputs
+            const input = [
+                { id: 1, url: "https://www.url1.dev" },
+                { id: 2, url: "https://www.url2.dev" },
+                { id: 3, url: "https://www.link3.dev" }
+            ];
+            const output = [{ id: 3, url: "https://www.link3.dev" }];
+            // Exercise/Validate: Run code and ensure it produces the correct output
+            expect(filterByTerm(input, "link")).toEqual(output);
+            expect(filterByTerm(input, "LINK")).toEqual(output);
+
+            // Teardown: Delete "cruft" created by running the test
+        })
+    })
+    ```
+4. Code Coverage: 
+    - Various ways to define this
+        - Statements:
+        - Branches: How many paths that your program can go down are covered by testing (i.e. if you have an if statement, is that covered)
+        - Functions
+        - Lines
+    - configuring this: bellow automatically cretes code coverage reports and presents them in HTML within the `__tests__/coverage` folder
+        ```
+        "scripts": {
+            "test": "jest"
+        },
+        "jest": {
+            "collectCoverage": true,
+            "coverageReporters": ["html],
+        }
+        ```
+5. Coupling with Enzyme to simualte actions on the front end: [Article](https://css-tricks.com/writing-tests-for-react-applications-using-jest-and-enzyme/)
+- Methods: Increasing level of seriousness (shallow -> rdner -> mount)
+    - `shallow` vs `render`: `shallow()` excludes child components while `render()` includes them
+    - `mount`: Adds the component (and children) to the DOM (need to call .unmount() during clean up to avoid conflicts)
+- Testing REact component's Lifespan (i.e. did the component mount)
+- Component props
+    - You can mock props to see if tehy get from one component to another
+        1. define what you want the props to be (i.e. `const user = {name: 'John Doe'}` )
+        2. Use this object as one of the arguments for the component and try to "catch" it on the other end
+        ```js
+        describe ('<Profile />', () => {
+            it ('contains h4', () => {
+                const wrapper = mount(<Profile user={user} />) // Passing in mocked object as a prop
+                const value = wrapper.find('h4').text() // Catching it
+                expect(value).toEqual('John Doe') // Validation
+            })
+        })
+        ```
+- API Mocking: Use jest to mock `axios` reuests to avoid having to hit an API
+    1. Create `__mock__` folder in same directory that contains `__tests__`
+    2. Create mocked output
+        ```js
+        module.exports = {
+            get: jest.fn(() => { // indicate the request method
+                return Promise.resolve({ // what you want to be returned (i.e. resolved promise)
+                    data: [
+                        {
+                            id: 1,
+                            name: 'Jane Doe',
+                            ...
+                        }
+                    ]
+                })
+            })
+        }
+        ```
+    3. Check that GET requests are made using axios and that axios references the mock
+        ```js
+        import axios from 'axios';
+        jest.mock('axios') // 
+        ```
+    4. Use JEst's `spyOn()` to see if you can get data from the API
+        ```js
+        it('fetches list of users', () => {
+            const getSpy = jest.spyOn(axios, 'get'); // Establishing the spy
+            const wrapper = shallow(<App />); // Callling the component
+            expect(getSpy).toBeCalled() // REference spy to ensure the get request is made
+        })
+        ```
+
+
+
 
 ## Redux
 ## Git and GitHub Pt. II
