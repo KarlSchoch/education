@@ -943,6 +943,7 @@ const printCarInfo = ({model, maker, city}) => {
 - Technical Design Doc Template: Adds in feature request template
 ### Deploy a React Application with Netlify
 ### React Router
+- [Docs](https://reactrouter.com/home)
 - Routing: how a web application uses current browser URL to determine what content to show a user
     - https://codeacademy.com/articles?search=node
         - Protocol: `https`
@@ -1036,6 +1037,23 @@ const printCarInfo = ({model, maker, city}) => {
                     })
                 }
                 ```
+- General Notes
+    - What does it do  
+        - Allows for client side reloaidng of the applications
+        - Parses the current URL of the page to get to a certain location
+        - Passing Parameters around that are stored within the URL
+        - Can create nested 
+        - Special things: `<Navigate />` and `<Outlet />`
+            - Navigate: USed to go to a specific URL if a condition is met (i.e. an error)
+            - Outlet: Within a nested router, provide tell the higher level element where to put the lowe level element (useful if you have a root element that contains a navigation bar and you also want to show other elements like a homepage within that root element.  In this case the Outlet would indicate where you want the other lements would be rendered)
+    - How do you do it
+        1. Define the router: `appRouter = createBrowserRouter(createRouterFromElements(<insert-elements />))`
+        2. Put the router into a `<routerProvider />`: `<RouterProvider router={appRouter}>`
+        3. Create the routes that you reference first their route, and second the element that they are rendering
+        4. Using parameters within the router
+            1. Indicate the parameter within the route with `:` `<Route to='client/:id'/>`
+            2. Pull those out using the search params
+            3. Define the component that creates the search params using the `createSearchParams`
 
 ## Redux
 ## Git and GitHub Pt. II
