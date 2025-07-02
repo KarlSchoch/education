@@ -25,20 +25,20 @@ function App() {
     setContacts([...contacts, newContact])
   }
   function addAppointment(name, contact, date, time) {
-    const newContact = {
+    const newAppointment = {
       name: name,
       contact: contact,
       date: date,
       time: time,
     }
-    setContacts([...contacts, newContact])
+    setAppointments([...appointments, newAppointment])
   }
 
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={ <Root/> }>
       <Route index element={ <Navigate to={ROUTES.CONTACTS} replace/> }/>
       <Route path={ROUTES.CONTACTS} element={ <ContactsPage contacts={contacts} addContact={addContact} /> }/>
-      <Route path={ROUTES.APPOINTMENTS} element={ <AppointmentsPage appointments={appointments} addAppointment={addAppointment}  /> }/>
+      <Route path={ROUTES.APPOINTMENTS} element={ <AppointmentsPage contacts={contacts} appointments={appointments} addAppointment={addAppointment}  /> }/>
     </Route>
   ));
   

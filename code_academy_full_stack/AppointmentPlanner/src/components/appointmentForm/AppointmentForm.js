@@ -21,6 +21,8 @@ export const AppointmentForm = ({
 }) => {
 
   return (
-    <></>
+    <>
+    <p>Appointment Form</p>
+    </>
   );
 };
