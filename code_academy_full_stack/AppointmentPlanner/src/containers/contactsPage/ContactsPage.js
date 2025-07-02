@@ -19,6 +19,16 @@ export const ContactsPage = ({ contacts, addContact }) => {
     Add contact info and clear data
     if the contact name is not a duplicate
     */
+    if (!currentNameExists && currentName && currentPhoneNumber && currentEmail) {
+      addContact(
+        currentName,
+        currentPhoneNumber,
+        currentEmail
+      );
+      setCurrentName('');
+      setCurrentPhoneNumber('');
+      setCurrentEmail('');
+    }
   };
 
   /*
@@ -36,27 +46,28 @@ export const ContactsPage = ({ contacts, addContact }) => {
     stateMap[name]?.(value)
   }
   useEffect(() => {
-    setCurrentNameExists(contacts.some(contact => contact.name == currentName));
+    setCurrentNameExists(contacts.some(contact => contact.name === currentName));
   }, [currentName, contacts])
 
   return (
     <div>
       <section>
         <h2>Add Contact</h2> 
-        <form>
-          <label for='contactName'>Name</label>
-          <input name='contactName' id='contactName' onChange={handleInputChange} value={currentName} />
-          { currentNameExists && <p style={{ color: 'red', margin: '0 0 .5rem' }}>This name already exists in your contacts</p>}
-          <label for='phoneNumber'>Phone Number</label>
-          <input name='phoneNumber' id='phoneNumber' onChange={handleInputChange} />
-          <label for='email'>Email</label>
-          <input name='email' id='email' onChange={handleInputChange} />
-          <button type='submit'>Add Contact</button>
-        </form>
+        <ContactForm 
+          name={currentName}
+          setName={handleInputChange}
+          phone={currentPhoneNumber}
+          setPhone={handleInputChange}
+          email={currentEmail}
+          setEmail={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
+        { currentNameExists && <p style={{ color: 'red' }}>This name already exists in your contacts</p>}
       </section>
       <hr />
       <section>
         <h2>Contacts</h2>
+        <TileList contacts={contacts} />
       </section>
     </div>
   );
