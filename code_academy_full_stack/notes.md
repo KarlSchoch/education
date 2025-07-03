@@ -1149,4 +1149,106 @@ const printCarInfo = ({model, maker, city}) => {
 
 
 ## Redux
+- ACtions
+    - `const action = { type: 'todos/addTodo', payload: 'Cook' }`
+- Reducers
+    - Sample reducer code
+        ```js
+        function reducer(state=existingState, action) {
+            switch (action.type) {
+                case 'todos/addTodo': {
+                    return [ ...state, action.payload ];
+                }
+                // more cases related to actions
+                default: {
+                    return state;
+                }
+            }
+        }
+        ```
+- Rules of Reducers: aka reducers must perform immutable updates (i.e. create a copy of an object it is working on and modify that copy rather than changing, aka mutating, the original object.  This is why you use the destructuring (i.e. `...`) syntax) and be **pure functions** (i.e. always gives the same results given the same inputs).  
+    1. Only calculate new state value based on state and action arguments
+    2. Noy allowed to modify the existing state.  Instead, copy existing state and make changes to copied values (this is important since react updates the DOM based on changes, so if you create a new object it won't refresh)
+    3. Must not do asynchronous logic/have other side effects (logging, saving file, etc.)
+- Redux in react: Seems VERY tied into the APIs
+    - main methods: `createStore()`, `store.getState()`, `store.dispatch(action)`, `store.subscribe(listener)`
+    - `store` encforces one way data flow and takes a reducer function as an argument (`export const store = createStore(someReducer)`)
+    - `store.dispatch()`
+        - sends action to the store, needs action argument with a type property
+        - Updates the state
+        - Action creators: function that outputs an action that can be used as the argument in the dispatch
+            ```js
+            function toggle() {
+                return { type: 'toggle' };
+            }
+            store.dispatch(toggle());
+            ```
+    - `store.subscribe()`: Similar to an event listener
+        - takes function argument (aka listener) that is executed in response to changes in stores state
+        - This appears to be looking at the ENTIRE store, not just some specific event
+        - pattern
+            ```js
+            // 1. Describe the listener
+            function listener() {
+                console.log(`show me the ${store.getState()}`)
+            }
+            // 2. subscribe to the store
+            const unsubscribe = store.subscribe(listener);
+            // 3. Do some stuff that causes the DOM to change and trigger your listener
+            // 4. unsubscribe
+            unsubscribe()
+            ```
+    - Integrating redux store with a UI
+        1. Create redux Store
+        2. reder initial application state: This is done at the level where you render the main <App> component within index js (covered in code block below 3)
+        3. subscribe to updates with subscription callback that gets current store state, selects data needed by piece of UI, updates UI with the data
+            ```js
+            // index.js
+            const render = () => {
+                // step 2
+                root.render(<App state={store.getState()} dispatch={store.dispatch} >)
+            }
+            render()
+
+            // step 3
+            store.subscribe(render);
+            ```
+        4. Respond to UI events by dispatching Redux actions: Within the comonement that you have rendering a UI (in this case `App.js`), use the dispatch function that is passed down to trigger the actions
+            ```js
+            // App.js (where the app component in index.js comes from)
+            // pull in action creators
+            import {increment} from './store'
+
+            // pass in the state and dispatch as arguments to the functional component
+            function App({state, dispatch}) {
+                // define event handler functions that dispatch actions to the store using the action creators
+                function incrementerClicked() {
+                    dispatch(increment());
+                }
+
+                return (
+                    <>
+                        // Attach the event handler to part of the UI so that user can initate actions that update the state
+                        <button id='incrementer' onClick={incrementerClicked}>+</button>
+                    </>
+                )
+            }
+            ```
+- Managing complex state
+    - Slices
+        - highest level elements within the state.  For instance, in the example state below, `todos` and `visibilityFilter` are the slices
+            ```js
+            state = {
+                todos: [
+                    // to do objects
+                ],
+                visibilityFilter: 'SHOW_INCOMPLETE'
+                };
+            ```
+    - GEnreally you plan out the initial state
+    - Process
+        1. Define what changes can happen to your state (aka actions and associated action creators)
+        2. Define a reducer that can execute those actions
+            - REducer Composition
+
 ## Git and GitHub Pt. II
