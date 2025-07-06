@@ -1249,6 +1249,82 @@ const printCarInfo = ({model, maker, city}) => {
     - Process
         1. Define what changes can happen to your state (aka actions and associated action creators)
         2. Define a reducer that can execute those actions
-            - REducer Composition
+            - REducer Composition: generally called [Redux Ducks](https://github.com/erikras/ducks-modular-redux)
+                - You can create a separate reducer fr each slide and then roll those up into a `root` reducer
+                ```js
+                const rootReducer = (state = {}, action) => {
+                    const nextState = {
+                        allRecipes: allRecipesReducer(state.allRecipes, action),
+                        searchTerm: searchTermReducer(state.searchTerm, action),
+                        favoriteRecipes: favoriteRecipesReducer(state.favorieRecipes, action)
+                    } 
+                    return nextState;
+                    }
+                ```
+                - Redux has a function `combineReducers` that simplifies the boilerplate above for defining a rootReducer
+                    1. Define an object of reducers
+                    2. call `combineReducers` on that object to create the rootReducer
+                    3. Create the store based on the rootReducer
+                - Distribute the state information down at the feature level and then aggregate that into a Roor reducer into a local file
+                    ```
+                    src
+                    |-- app
+                        |-- store.js <!-- Contains root reducer  -->
+                    |-- features/
+                        |-- featureA
+                            |-- featureASlice.js <!-- Defines code relating to feature's slice (i.e. reducers and action creators)  -->
+                        |-- featureB
+                            |-- featureBSlice.js
+                    ```
+            3. Integrating the redux state elements into the react App (already covered this, but the main idea here is to use the various different lower level functions)
+                - The approach that I covered of "prop drilling" where you go from app all the way down the component tree until where the state is used is not ideal, and it looks like redux has a tool that we will use to address this.
+_NOTE_ As I'm going through this, I am seeing that you get the following progression as it relates to state
+    1. React: You have to pass the state up and down the component tree since it is stored there.  This makes it hard to get things between components
+    2. Redux: You store the state in a single location that is held at the top of the component tree.  This gets rid of the state being distributed, BUT still has a problem with the "prop drilling"
+    3. Redux Tooling: Probably lets you access that centralized store without the prop drilling
+- Redux Toolkit
+    - `createSlice` Method: reduces the boilerplate that you need to write to create a reducer.  Just create a config object with the name of the slice, the initial state, and the reduces (no need to write switch statements and action functions separately)
+        - creates an object that contains the necessary items to manage that state slice (action creators, state, etc.)
+        - export the action creators separately from the reducers
+            ```js
+            export const { addTodo, toggleTodo } = todosSlice.actions;
+            export default todosSlice.reducer
+            ```
+    - Immer: Lets you use mutate logic like `.push()` to make adjustments to state and avoid having to copy things
+        `return [...state, action.payload]` becomes `state.push(action.payload)`
+    - Configure store: allows us to simply import the function, call it by providing a configuration object (for the puroses of this just setting up a reducer), and then it provides a root reducer, store, middleware that checks for accidentaly mutating state, and DevTools
+- Building Redux store in vanilla JS
+    1. Define `createStore()` as a function that takes in a reducer and returns an object with three methods
+    2. Hold the current state of the application
+    3. Manage listeners
+    4. Handle incoming actions
+    5. Initialize state to initial value of reducer 
+        ```js
+        // 1. General outline of the function
+        const createStore = (reducer) => {
+            // 2. State variable for maintaining the state
+            let state;
+            // 3a. Create arary of listeners
+            let listeners = [];
+            const getState = () => state;
+            // 4. DEal with actions
+            const dispatch = (action) => {
+                // 4a. update the state based on the reducer's output for that given action
+                state = reducer(state, action);
+                // 4b. Execute each listener (don't pass state here, you run .getState() within each listener)
+                listeners.forEach(listener => listener());
+            };
+            // 3b. Add listeners throught the subscribe method (returns function to enable unsubscribe functionality when you want to remove a listener)
+            const subscribe = (listener) => {
+                listeners.push(listener);
+                return () => {
+                    listeners = listeners.filter(l => l !== listener)
+                }
+            };
+            // 5. Initialize the state
+            dispatch({});
+            return { getState, dispatch, subscribe };
+        }
+        ```
 
 ## Git and GitHub Pt. II
