@@ -1284,6 +1284,11 @@ _NOTE_ As I'm going through this, I am seeing that you get the following progres
     3. Redux Tooling: Probably lets you access that centralized store without the prop drilling
 - Redux Toolkit
     - `createSlice` Method: reduces the boilerplate that you need to write to create a reducer.  Just create a config object with the name of the slice, the initial state, and the reduces (no need to write switch statements and action functions separately)
+        - Syntax
+            ```js
+
+            ```
+        - Automatically generates action creators and action types based on the case reducer functions in the reducers property
         - creates an object that contains the necessary items to manage that state slice (action creators, state, etc.)
         - export the action creators separately from the reducers
             ```js
@@ -1326,5 +1331,59 @@ _NOTE_ As I'm going through this, I am seeing that you get the following progres
             return { getState, dispatch, subscribe };
         }
         ```
+- Middleware and Thunks:
+    - BLUF helps you deal with asynchronous operations that occur as part of updating the application state
+    - Within REdux context:
+        - Middleware runs between when action is dispatched by the event handler and when that action is passed alongto the reducer
+        - Implementation is through ReduxToolkit's `createAsynchTunk()` and `createSlice()`'s `extraReducers` option
+        - `import {applyMiddleware} from 'redux';`
+            - `applyMiddleware` means that calls to displatch are actually calls to the entire middleware pipeline (i.e. dispatch -> middleware -> reducer)
+                ```js
+                const store = createStore(
+                    exampleReducer,
+                    initialState,
+                    applyMiddleware(
+                        middleware1,
+                        middleware2,
+                        middleware3,
+                    )
+                )
+                ```
+            - inidividual pieces of middleware must be implemented as a higher order function
+                ```js
+                const exampleMiddleWare = storeAPI => next => action => {
+                    // do stuff here
+                    return next(action); // passing action to the next middleware in the pipeline
+                }
+                ```
+        - Thunks: Hihher order function that wraps computation we want to perform later
+            - Example: `add()` returns funk that will perform x + y
+            ```js
+            const add = (x, y) => {
+                return () => {
+                    return x + y;
+                }
+            }
+            ```  
+            - USed as part of the process for dealing with **promise lifecycle actions** (`createAsyncThunk()`);
+                - arguments: asynchronous action's type (i.e. `resourceType/actionName`), payload creator: aync function that returns promise resolving to result of async operation
+                ```js
+                import { createAsyncThunk } from '@reduxjs/toolkit';
+                const fetchUserById = createAsyncThunk(
+                    'users/fetchUserById', // action type: format is 'nameOfSlice/nameOfAction' so this would (likely) be 'users/fetchUserById'
+                    async (arg, thunkAPI) => { // payload creator (does not dispatch actions - stuff that gets sent to the reducer has to be a pure function)
+                        const response = await fetchUSer(arg);
+                        return response.json();
+                    }
+                )
+                ```
+                - asynch function parameters
+                    - `arg`: first argument passed to the ation creator (if you want to pass multiple arguments to the thunk, bundle multiple arguments into a single object)
+                    - `thunkAPI`: built in object
+                - how are we dealing with the different potential promise statuses?  When you pass an action type to `createAsyncThunk`, e.g. `resourceType/actionType`, you produce three action types that correspond to the different potential promise states: `resourceType/actionType/pending`, `resourceType/actionType/fulfilled`, `resourceType/actionType/rejected`.
+            - if you use `createAsyncThunk` to make those promise lifecycle action types, you will need a way for the `createSlice` object to deal with the actions created there.  This requires using the `extraReducers` propery within `createSlice`
+            - redux toolkit's `configureStore` returns a store that applies a thunk middleware by default.
+            - Setting up Redux Dev Tools
+                1. Install REdux Dev Toops
 
 ## Git and GitHub Pt. II
