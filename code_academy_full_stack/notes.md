@@ -1448,7 +1448,7 @@ _NOTE_ As I'm going through this, I am seeing that you get the following progres
                     const handleSubmit = (e) => {
                         e.preventDefault();
                         // dispatch your asynchronous action here!
-                        dispatch(postCommentForArticleId(articleId, comment));
+                        dispatch(postCommentForArticleId({articleId, comment}));
 
                         setComment('');
                     };
