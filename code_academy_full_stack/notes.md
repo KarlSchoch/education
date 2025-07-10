@@ -1384,6 +1384,77 @@ _NOTE_ As I'm going through this, I am seeing that you get the following progres
             - if you use `createAsyncThunk` to make those promise lifecycle action types, you will need a way for the `createSlice` object to deal with the actions created there.  This requires using the `extraReducers` propery within `createSlice`
             - redux toolkit's `configureStore` returns a store that applies a thunk middleware by default.
             - Setting up Redux Dev Tools
-                1. Install REdux Dev Toops
+        - Process of dealing with async calls using middleware and thinkgs
+            1. (within the slice) define and export a function with `createAsyncThunk()` that conains the path of the action and an async function
+                ```js
+                export const asyncActionCreator = createAsyncThunk(
+                    'nameOfSlice/nameOfAction',
+                    async ({ prop1, prop2 }) => {
+                        // do some asynchronous operations here 
+                    }
+                );
+                ```
+            2. (within the slice) create variables in the slice's initial state that reflect the fact that you will need to deal with the pending/rejected/fulfilled promise lifecycle states.
+                ```js
+                export const commentsSlice = createSlice({
+                    name: 'comments',
+                    initialState: {
+                        // Add initial state properties here.
+                        byArticleId: {},
+                        // promise lifecycle variables
+                        isLoadingComments: true,
+                        failedToLoadComments: false,
+                    },
+                    // Add extraReducers here.
+                    ...
+                })
+            3. (within the slice) Create logic within the `extraReducers` argument of `createSlice()` to deal with each one of the promise lifecycle states
+                ```js
+                export const commentsSlice = createSlice({
+                    name: 'comments',
+                    initialState: {
+                        byArticleId: {},
+                        isLoadingComments: false,
+                        failedToLoadComments: false,
+                        createCommentIsPending: false,
+                        failedToCreateComment: false
+                    },
+                    // dealing with the promise lifecycle states
+                    extraReducers: {
+                        [loadCommentsForArticleId.pending]: (state, action) => {
+                        state.isLoadingComments = true;
+                        state.failedToLoadComments = false;
+                        },
+                        [loadCommentsForArticleId.rejected]: (state, action) => {
+                        state.isLoadingComments = false;
+                        state.failedToLoadComments = true;
+                        },
+                        [loadCommentsForArticleId.fulfilled]: (state, action) => {
+                        state.byArticleId[action.payload.articleId] = action.payload;
+                        state.isLoadingComments = false;
+                        state.failedToLoadComments = false;
+                        },
+                    },
+                    ...
+                })
+                ```
+            4. (within the component) Within some event that happens (i.e. useEffect that is linked to a certain variable chaning or an event handler), dispatch the action (after it has been imported of course!)
+                ```js
+                export default function CommentForm({ articleId }) {
+                    const dispatch = useDispatch();
+                    const [comment, setComment] = useState('');
+                    // Declare isCreatePending here.
+
+                    const handleSubmit = (e) => {
+                        e.preventDefault();
+                        // dispatch your asynchronous action here!
+                        dispatch(postCommentForArticleId(articleId, comment));
+
+                        setComment('');
+                    };
+                    ...
+                }
+                ```
+
 
 ## Git and GitHub Pt. II
