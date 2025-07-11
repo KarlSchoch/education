@@ -1455,6 +1455,25 @@ _NOTE_ As I'm going through this, I am seeing that you get the following progres
                     ...
                 }
                 ```
+            5. create and export a selector for the state objects.
+            6. add the slice to the store: `/src/app/store.js`
+- End to end notes from the challenge project
+    1. define the store within `src/app/store.js` using redux toolkit's `configureStore()` method
+    2. import that store into the `index.js` file, alng with react redux's `<Provider>` element, and set the state provider to store 
+        ```js
+        <Provider store={store}>
+            <App />
+        </Provider>
+        ```
+        - This is useful because it means that you don't have to pass state into each and every component directly and is automatically accessible via react redux's magic
+    3. within the feature (i.e. the different slices of state), define a slice using create slice.
+        - here you need to not only set the name(will be prepended to the actions, so a slice with the name `topicsSlice` and an action `addTopic` will have a name `topicsSlice/addTopic`), initial state, but also define the reducers
+        - You also need to define selectors: `export const selectTopics = state => state.<structure-of-slice>`
+    4. You will then need to export the state selectors (i.e. ) and actions as named exports and the reducer as a default export
+    5. Within the component(s) that corresponds to the feature, you need to use the selector and action functions that are exported from the slice
+        - Importing `useDispatch()` and `useSelector()` allows you to take advantage of the Redux magic
+        - If you pass your selector function to useSelector (i.e. `useSelector(selectTopics)`) you don't need to provide a state input for the selectTopics function due to the aforementioned redux magic
+        - Similarly for useDispatch, you pass it the **INVOKED ACTION** (i.e. `useDispatch(action())` rather than `useDispatch(action)`), constructing the payload as necessary.
 
 
 ## Git and GitHub Pt. II
