@@ -1149,6 +1149,13 @@ const printCarInfo = ({model, maker, city}) => {
 
 
 ## Redux
+- Resources (mostly testing focused)
+    - [Exploring Redux Middleware](http://blog.krawaller.se/posts/exploring-redux-middleware/)
+    - [Writing Tests in Redux](https://redux.js.org/usage/writing-tests)
+    - [Redux Testing Step by Step: A Simple Methodology for Testing Business Logic](https://hackernoon.com/redux-testing-step-by-step-a-simple-methodology-for-testing-business-logic-8901670756ce)
+    - [Testing Strategies for React and Redux](https://hacks.mozilla.org/2018/04/testing-strategies-for-react-and-redux/)
+    - [How to test React-Redux connected Components](https://www.robinwieruch.de/react-connected-component-test/)
+    - [How to test Redux (video)](https://www.youtube.com/watch?v=h7ukDItVN_o)
 - ACtions
     - `const action = { type: 'todos/addTodo', payload: 'Cook' }`
 - Reducers
@@ -1474,6 +1481,5 @@ _NOTE_ As I'm going through this, I am seeing that you get the following progres
         - Importing `useDispatch()` and `useSelector()` allows you to take advantage of the Redux magic
         - If you pass your selector function to useSelector (i.e. `useSelector(selectTopics)`) you don't need to provide a state input for the selectTopics function due to the aforementioned redux magic
         - Similarly for useDispatch, you pass it the **INVOKED ACTION** (i.e. `useDispatch(action())` rather than `useDispatch(action)`), constructing the payload as necessary.
-
 
 ## Git and GitHub Pt. II
