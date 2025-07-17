@@ -19,8 +19,49 @@
 }
 
 .content {
+  display: grid;
   width: 100%;
   padding-top: 70px;
+  grid-template-columns: 2fr 1fr;
+}
+
+.posts {
+  padding: 10px
+}
+.subreddits {
+  background-color: #ffe4c4;
+  padding: 10px
+}
+.subreddits-mobile {
+  background-color: #ffe4c4;
+  display: none
+}
+
+@media (max-width: 650px) {
+  .banner,
+  .posts,
+  .subreddits,
+  .subreddits-mobile {
+    padding: 5px;
+  }
+  .content {
+    display: block;
+  }
+  .subreddits {
+    display: none;
+  }
+  .subreddits-mobile {
+    display: block;
+  }
+}
+
+.post {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+.comment {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
 }
 
 .logo {
