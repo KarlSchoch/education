@@ -12,8 +12,7 @@
     - Post image
     - Post time
     - Post metadata
-        - User: Contains user ID of 
-        - Post Time
+        - User: Contains user ID of
         - Comments: References the comment IDs that are associated with the post
         - Up/down vote count
 3. Comments
@@ -69,3 +68,15 @@
 ##### Subreddit
 1. Name
 2. Photo
+
+# Execution
+- [] Create styling within separate components
+- [] Create react redux store
+- [] Evaluate data from Reddit API
+- [] Create components
+    - Order
+        - Post (main body)
+        - Comment/Comment List
+    - Definition of Done
+        - Passing Test
+        - 

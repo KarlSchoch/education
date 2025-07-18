@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Banner from './components/Banner';
-import Content from  './components/Content';
+import Content from './components/Content';
 import './App.css';
 
 function App() {

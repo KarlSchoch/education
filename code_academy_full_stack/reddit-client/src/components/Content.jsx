@@ -1,7 +1,7 @@
 import React from 'react';
-import Posts from './Posts';
-import Subreddits from './Subreddits'
-import SubredditsMobile from './SubredditsMobile'
+import Posts from '../features/posts/Posts';
+import Subreddits from '../features/subreddits/Subreddits'
+import SubredditsMobile from '../features/subreddits/SubredditsMobile'
 
 const Content = () => {
     return (
