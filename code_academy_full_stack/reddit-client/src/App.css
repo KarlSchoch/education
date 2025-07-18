@@ -1,5 +1,4 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   text-align: center;
 }
@@ -22,7 +21,7 @@
   display: grid;
   width: 100%;
   padding-top: 70px;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 3fr 1fr;
 }
 
 .posts {
@@ -46,6 +45,7 @@
   }
   .content {
     display: block;
+    padding-top: 60px;
   }
   .subreddits {
     display: none;
