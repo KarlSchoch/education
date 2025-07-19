@@ -5,12 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectUpVoteCt, selectDownVoteCt } from './postSlice';
 
 const Post = ({ id }) => {
-    console.log('hitting the post')
-    console.log('id', id)
     const upVoteCt = useSelector(selectUpVoteCt(id));
     const downVoteCt = useSelector(selectDownVoteCt(id));
-    console.log('upVoteCt', upVoteCt)
-    console.log('downVoteCt', downVoteCt)
 
     return (
         <div className='post'>

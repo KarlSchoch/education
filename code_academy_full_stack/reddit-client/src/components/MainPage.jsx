@@ -1,16 +1,17 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
 import Posts from '../features/posts/Posts';
 import Subreddits from '../features/subreddits/Subreddits'
 import SubredditsMobile from '../features/subreddits/SubredditsMobile'
 
-const Content = () => {
-    console.log("showing content component")
+const MainPage = () => {
+    console.log("showing Main Page component")
     return (
-        <div className='content'>
-            <Outlet />
+        <div className='main-page'>
+            <SubredditsMobile />
+            <Posts />
+            <Subreddits />
         </div>
     );
 };
 
-export default Content;
+export default MainPage;
