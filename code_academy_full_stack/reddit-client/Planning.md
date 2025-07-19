@@ -74,7 +74,8 @@
 - [x] Create react redux store and conduct initial wiring
 - [] Evaluate data from Reddit API
     - Update the structure to reflect the fact that we don't have a single page, but you can click into specific posts
-    - Remove the comment togggle
+    - Make the structure of the posts element be dependent upon what is in the 
+    - potentially delete the comments slice.  Everything will just live within a post
 - [] Create components
     - Order
         - Post (main body)
@@ -86,6 +87,8 @@
 # Reddit API data
 - Will probably need to create a a structure where I have a single homepage that creates a preview and then be able to "double-click" into a specific post
     - Preview contents: 
+
+
 ## api call pattern:
     - Individual subreddit: `https://www.reddit.com/r/<name-of-subreddit>.json`
     - search term: `https://www.reddit.com/search.json?q=cake%20recipes`
@@ -117,7 +120,6 @@
 #### Notes
 Only picking the top level comments, not going down to the next level (i.e. no replies)
 #### Data Structure
-- 
 - data.children: list of elements on the page
     - kind: t1 indicates that it is a comment, t3 indicates that it is a post
     - data: list of the comments
@@ -129,3 +131,32 @@ Only picking the top level comments, not going down to the next level (i.e. no r
         - created: when it is created
         - ups: upvotes
         - downs: downvotes
+
+# Post Structure
+1. Need to decide what get's passed down to the components to be populated
+2. Need to decide when/jpw to populate elements from the store
+
+## Home Page
+### Post
+#### Rendering
+- data.children.data
+    - title, author, ups, downs, subreddit_name_prefixed, num_comments, permalink
+#### Data population
+Add the following elements to a post's state
+- data.children.data.preview.images.source
+    - url, width, height
+### Comment
+None
+## Post Detail
+### Post
+
+#### Rendering
+
+#### Data population
+- data.children[el].kind == t1 -> state.posts.posts.metadata.comments 
+    - author, body, created (need to translate this into a human readable date format), ups, downs
+    - filter on author_is_blocked (T/F) and banned_by/banned_at_utc (null) to determine whether to add the post
+
+### Comment
+#### Rendering
+#### Data population
