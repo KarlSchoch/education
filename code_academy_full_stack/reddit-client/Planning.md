@@ -73,9 +73,10 @@
 - [x] Create styling within separate components
 - [x] Create react redux store and conduct initial wiring
 - [] Evaluate data from Reddit API
-    - Update the structure to reflect the fact that we don't have a single page, but you can click into specific posts
-    - Make the structure of the posts element be dependent upon what is in the 
-    - potentially delete the comments slice.  Everything will just live within a post
+    - [x] Update the UI structure to reflect the fact that we don't have a single page, but you can click into specific posts
+    - [x] Make the structure of the posts element be dependent upon whether it is in the Main Page or Post Details
+    - [x] potentially delete the comments slice.  Everything will just live within a post
+    - [] Determine how to pass the post id's to display into the posts section
 - [] Create components
     - Order
         - Post (main body)

@@ -24,6 +24,7 @@ const postSlice = createSlice({
                     comments: [],
                     upVoteCt: 2,
                     downVoteCt: 1,
+                    commentCt: 100
                 }
             },
             456: {
@@ -35,6 +36,7 @@ const postSlice = createSlice({
                     comments: [],
                     upVoteCt: 1,
                     downVoteCt: 1012,
+                    commentCt: 245
                 }
             },
         },
@@ -63,5 +65,6 @@ const postSlice = createSlice({
 
 export const selectUpVoteCt = (id) => (state) => state.posts.posts[id].metadata.upVoteCt;
 export const selectDownVoteCt = (id) => (state) => state.posts.posts[id].metadata.downVoteCt;
+export const selectCommentCt = (id) => (state) => state.posts.posts[id].metadata.commentCt;
 
 export default postSlice.reducer;

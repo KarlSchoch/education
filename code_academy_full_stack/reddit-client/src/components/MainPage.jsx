@@ -4,7 +4,7 @@ import Subreddits from '../features/subreddits/Subreddits'
 import SubredditsMobile from '../features/subreddits/SubredditsMobile'
 
 const MainPage = () => {
-    console.log("showing Main Page component")
+    
     return (
         <div className='main-page'>
             <SubredditsMobile />
