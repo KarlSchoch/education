@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 
 // Example async thunk for fetching posts
 export const fetchPosts = createAsyncThunk(
@@ -63,8 +63,12 @@ const postSlice = createSlice({
     },
 });
 
-export const selectUpVoteCt = (id) => (state) => state.posts.posts[id].metadata.upVoteCt;
-export const selectDownVoteCt = (id) => (state) => state.posts.posts[id].metadata.downVoteCt;
-export const selectCommentCt = (id) => (state) => state.posts.posts[id].metadata.commentCt;
+export const selectUpVoteCt = (postId) => (state) => state.posts.posts[postId].metadata.upVoteCt;
+export const selectDownVoteCt = (postId) => (state) => state.posts.posts[postId].metadata.downVoteCt;
+export const selectCommentCt = (postId) => (state) => state.posts.posts[postId].metadata.commentCt;
+export const selectPostIds = createSelector(
+    [(state) => state.posts.posts],
+    (posts) => Object.keys(posts || {})
+);
 
 export default postSlice.reducer;

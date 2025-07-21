@@ -1,11 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import CommentList from '../comments/CommentList';
 import { selectUpVoteCt, selectDownVoteCt, selectCommentCt } from './postSlice';
 
-const Post = () => {
-    const { postId } = useParams();
+const Post = ({postId}) => {
 
     const upVoteCt = useSelector(selectUpVoteCt(postId));
     const downVoteCt = useSelector(selectDownVoteCt(postId));
