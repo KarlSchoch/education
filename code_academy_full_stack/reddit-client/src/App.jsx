@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Banner from './components/Banner';
-import Content from './components/Content';
-import MainPage from './components/MainPage';
-import PostDetails from './components/PostDetails';
+import Banner from './components/Banner/Banner';
+import Content from './components/Content/Content';
+import MainPage from './components/MainPage/MainPage';
+import PostDetails from './components/PostDetails/PostDetails';
 import './App.css';
 
 function App() {
