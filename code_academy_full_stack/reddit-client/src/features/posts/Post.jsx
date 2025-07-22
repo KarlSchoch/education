@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router';
 import CommentList from '../comments/CommentList';
 import { selectUpVoteCt, selectDownVoteCt, selectCommentCt } from './postSlice';
 
-const Post = ({postId}) => {
+const Post = ({ postId, mainPage }) => {
 
     const upVoteCt = useSelector(selectUpVoteCt(postId));
     const downVoteCt = useSelector(selectDownVoteCt(postId));
@@ -11,9 +12,9 @@ const Post = ({postId}) => {
 
     return (
         <div className='post'>
-            {/* Add conditional making text a link if you're on the main page */}
-            Main body of the post that includes text, photo
-            <br />
+            {
+                mainPage ? <Link to={`/post/${postId}`}>Link Title</Link> : <p>Non-Link Title</p>
+            }
             <ul>
                 <li>Upvotes: {upVoteCt}</li>
                 <li>Downvotes: {downVoteCt}</li>
@@ -21,7 +22,7 @@ const Post = ({postId}) => {
             </ul>
             Time and <span className='user'>user</span>
             <hr />
-            {postId && <CommentList />}
+            {!mainPage && <CommentList />}
         </div>
     );
 };
