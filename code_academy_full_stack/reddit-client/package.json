@@ -11,7 +11,7 @@
   },
   "jest": {
     "testEnvironment": "jest-environment-jsdom",
-    "setupFilesAfterEnv": ["@testing-library/jest-dom"]
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js", "@testing-library/jest-dom"]
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
