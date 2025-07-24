@@ -3,7 +3,13 @@ import { screen } from "@testing-library/react";
 import { renderWithReduxAndRouter } from '../../../test-utils';
 
 describe('PostDetails', () => {
-    it('Renders PostDetails component', () => {
-        renderWithReduxAndRouter('/post/123');
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+    
+    it('Renders PostDetails component', async () => {
+        await React.act(async () => {
+            renderWithReduxAndRouter('/post/123');
+        })
     })
 })

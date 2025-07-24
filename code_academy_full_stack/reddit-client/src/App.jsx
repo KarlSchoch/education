@@ -4,8 +4,6 @@ import AppRoutes from './app/AppRoutes';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-  console.log("showing App component")
 
   return (
     <>

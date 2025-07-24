@@ -5,7 +5,6 @@ import Subreddits from '../../features/subreddits/Subreddits'
 import SubredditsMobile from '../../features/subreddits/SubredditsMobile'
 
 const Content = () => {
-    console.log("showing content component")
     return (
         <div className='content'>
             <Outlet />
