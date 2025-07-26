@@ -49,6 +49,7 @@ const postSlice = createSlice({
 export const selectUpVoteCt = (postId) => (state) => state.posts.posts[postId].metadata.upVoteCt;
 export const selectDownVoteCt = (postId) => (state) => state.posts.posts[postId].metadata.downVoteCt;
 export const selectCommentCt = (postId) => (state) => state.posts.posts[postId].metadata.commentCt;
+export const selectTitle = (postId) => (state) => state.posts.posts[postId].title;
 export const selectPostIds = createSelector(
     [(state) => state.posts.posts],
     (posts) => Object.keys(posts || {})

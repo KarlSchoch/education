@@ -19,7 +19,7 @@ describe('Posts', () => {
         expect(await screen.findByTestId('post-fetch-warning')).toBeInTheDocument();
         // 2. Display cached content
         expect(
-            await screen.findByText(/'my friend \(28F\) is about eight months pregnant'/i)
+            await screen.findByText('Drones being used to indicate exit for an event in Osaka, Japan')
         ).toBeInTheDocument();
         
         // Teardown (included in afterEach)
