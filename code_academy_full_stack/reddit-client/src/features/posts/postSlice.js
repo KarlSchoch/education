@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
+import { parseRedditPosts } from '../../utils/parseRedditPosts';
+import initialMainpageJson from '../../assets/api-data/initial-main-page-data.json'
 
 // Example async thunk for fetching posts
 export const fetchPosts = createAsyncThunk(
@@ -11,35 +13,16 @@ export const fetchPosts = createAsyncThunk(
     }
 );
 
+const parsed_posts = parseRedditPosts(initialMainpageJson)
+const initial_posts = {}
+parsed_posts.forEach((parsed_post) => {
+    initial_posts[crypto.randomUUID()] = parsed_post;
+});
+
 const postSlice = createSlice({
     name: 'posts',
     initialState: {
-        posts: {
-            123: {
-                text: 'Something really witty',
-                img: null,
-                timePosted: '9:07 AM July 1st, 2025',
-                metadata: {
-                    user: 'big-brain-97',
-                    comments: [],
-                    upVoteCt: 2,
-                    downVoteCt: 1,
-                    commentCt: 100
-                }
-            },
-            456: {
-                text: 'Something really dumb',
-                img: null,
-                timePosted: '9:08 AM July 1st, 2025',
-                metadata: {
-                    user: 'small-brain-97',
-                    comments: [],
-                    upVoteCt: 1,
-                    downVoteCt: 1012,
-                    commentCt: 245
-                }
-            },
-        },
+        posts: initial_posts,
         status: 'idle',
         error: null,
     },

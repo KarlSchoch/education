@@ -9,6 +9,13 @@ const Post = ({ postId, mainPage }) => {
     const upVoteCt = useSelector(selectUpVoteCt(postId));
     const downVoteCt = useSelector(selectDownVoteCt(postId));
     const commentCt = useSelector(selectCommentCt(postId));
+    // add selectors for the following
+    //  title
+    //  text
+    //  subreddit
+    //  img
+    //  timePosted
+    //  user
 
     return (
         <div className='post'>
