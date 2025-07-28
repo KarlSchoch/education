@@ -16,7 +16,7 @@ export const fetchPosts = createAsyncThunk(
 const parsed_posts = parseRedditPosts(initialMainpageJson)
 const initial_posts = {}
 parsed_posts.forEach((parsed_post) => {
-    initial_posts[crypto.randomUUID()] = parsed_post;
+    initial_posts[parsed_post.id] = parsed_post;
 });
 
 const postSlice = createSlice({

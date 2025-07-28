@@ -5,6 +5,7 @@ export function parseRedditPosts(redditJson) {
         const post = child.data;
         const timePostedFormat = new Date(post.created * 1000)
         return {
+            id: post.id,
             title: post.title,
             text: post.selftext,
             subreddit: post.subreddit_name_prefixed,

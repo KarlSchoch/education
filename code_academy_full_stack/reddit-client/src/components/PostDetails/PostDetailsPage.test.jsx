@@ -9,7 +9,7 @@ describe('PostDetails', () => {
     
     it('Renders PostDetails component', async () => {
         await React.act(async () => {
-            renderWithReduxAndRouter('/post/123');
+            renderWithReduxAndRouter('/post/1m2adlq');
         })
     })
 })
