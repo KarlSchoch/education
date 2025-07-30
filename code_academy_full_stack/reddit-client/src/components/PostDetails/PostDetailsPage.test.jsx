@@ -7,9 +7,30 @@ describe('PostDetails', () => {
         jest.restoreAllMocks();
     });
     
-    it('Renders PostDetails component', async () => {
-        await React.act(async () => {
-            renderWithReduxAndRouter('/post/1m2adlq');
-        })
+    it('Includes error message if unable to ', async () => {
+        // Setup
+        jest.spyOn(global, 'fetch').mockRejectedValueOnce(new Error('Network down'));
+
+        // Exercise
+        renderWithReduxAndRouter('/post/1m2adlq');
+
+        // Verify
+        expect(await screen.findByTestId('comment-fetch-warning')).toBeInTheDocument()
+
+        // Teardown
     })
+
+    // it('Renders PostDetails component with successful API Call ', async () => {
+    //     // Setup
+
+    //     // Exercise
+    //     await React.act(async () => {
+    //         renderWithReduxAndRouter('/post/1m2adlq');
+    //     })
+
+    //     // Verify
+    //     // 1. 
+
+    //     // Teardown
+    // })
 })

@@ -6,8 +6,8 @@ import initialMainpageJson from '../../assets/api-data/initial-main-page-data.js
 export const fetchPosts = createAsyncThunk(
     'posts/fetchPosts',
     async (_, thunkAPI) => {
-        // Replace with your API call
-        const response = await fetch('/api/posts');
+        const url = '/api/reddit/r/popular.json';
+        const response = await fetch(url);
         if (!response.ok) throw new Error('Failed to fetch posts');
         return await response.json();
     }
@@ -37,7 +37,14 @@ const postSlice = createSlice({
             })
             .addCase(fetchPosts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.items = action.payload;
+
+                const parsed_posts = parseRedditPosts(action.payload);
+                state.posts = {};
+                parsed_posts.forEach((post) => {
+                    state.posts[post.id] = post;
+                })
+
+                state.error = null
             })
             .addCase(fetchPosts.rejected, (state, action) => {
                 state.status = 'failed';

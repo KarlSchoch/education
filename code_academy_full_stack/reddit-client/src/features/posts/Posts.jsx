@@ -1,31 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectPostIds } from './postSlice';
+import { selectPostIds, fetchPosts } from './postSlice';
 import Post from './Post';
 
 const Posts = () => {
     const [userWarning, setUserWarning] = useState(false);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const url = '/api/reddit/r/popular.json';
-                const res = await fetch(url)
-                if (!res.ok) {
-                    console.warn('Response not OK')
-                    setUserWarning(true);
-                    return;
-                }
-                const data = await res.json()
-            } catch(err) {
-                setUserWarning(true);
-                return
-            }
-        };
-
+        dispatch(fetchPosts())
+            .unwrap()
+            .catch(() => setUserWarning(true));
         fetchPosts();
-    }, [])
+    }, [dispatch])
 
     // Define parameters for rendering post content
     let idList;

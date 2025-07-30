@@ -4,8 +4,10 @@ import { renderWithReduxAndRouter } from '../../../test-utils';
 import successMainpageJson from '../../assets/api-data/success-main-page-data.json';
 
 describe('Posts', () => {
+    const originalFetch = global.fetch
     afterEach(() => {
         jest.restoreAllMocks();
+        global.fetch = originalFetch;
     });
 
     it('Warns user about API Call error - Main Page', async () => {
