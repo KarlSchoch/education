@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
 import { parseRedditPosts } from '../../utils/parseRedditPosts';
 import initialMainpageJson from '../../assets/api-data/initial-main-page-data.json'
 
-// Example async thunk for fetching posts
+// Async thunks
 export const fetchPosts = createAsyncThunk(
     'posts/fetchPosts',
     async (_, thunkAPI) => {
@@ -12,6 +12,15 @@ export const fetchPosts = createAsyncThunk(
         return await response.json();
     }
 );
+export const fetchPostDetails = createAsyncThunk(
+    'posts/fetchPostDetails',
+    async ({postId, subreddit}, thunkAPI) => {
+        const url = `/api/reddit/r/${subreddit}/comments/${postId}.json`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch post details');
+        return await response.json();
+    }
+)
 
 const parsed_posts = parseRedditPosts(initialMainpageJson)
 const initial_posts = {}
@@ -35,18 +44,29 @@ const postSlice = createSlice({
                 state.status = 'loading';
                 state.error = null;
             })
+            .addCase(fetchPostDetails.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
             .addCase(fetchPosts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-
-                const parsed_posts = parseRedditPosts(action.payload);
+                const parsedPosts = parseRedditPosts(action.payload);
                 state.posts = {};
-                parsed_posts.forEach((post) => {
+                parsedPosts.forEach((post) => {
                     state.posts[post.id] = post;
                 })
-
                 state.error = null
             })
+            .addCase(fetchPostDetails.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                const parsedComments = fetchPostDetails(action.payload)
+                state.error = null;
+            })
             .addCase(fetchPosts.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+            .addCase(fetchPostDetails.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
             });

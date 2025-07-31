@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router';
 import CommentList from '../comments/CommentList';
-import { selectUpVoteCt, selectDownVoteCt, selectCommentCt, selectTitle } from './postSlice';
+import { selectUpVoteCt, selectDownVoteCt, selectCommentCt, selectTitle, fetchPostDetails } from './postSlice';
 
 const Post = ({ postId, mainPage }) => {
 
@@ -10,6 +10,7 @@ const Post = ({ postId, mainPage }) => {
     const downVoteCt = useSelector(selectDownVoteCt(postId));
     const commentCt = useSelector(selectCommentCt(postId));
     const title = useSelector(selectTitle(postId));
+    // useEffect()
     // add selectors for the following
     //  text
     //  subreddit

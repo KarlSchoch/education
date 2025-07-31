@@ -161,3 +161,10 @@ None
 ### Comment
 #### Rendering
 #### Data population
+
+
+
+# Implementing warning
+1. Create async thunk for pulling in the data related to a post
+2. Create function for prasing posts out of the
+3. Create warning element that populates based on the error status
