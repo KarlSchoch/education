@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import { parseRedditPosts } from '../../utils/parseRedditPosts';
+import { parseRedditComments } from '../../utils/parseRedditComments';
 import initialMainpageJson from '../../assets/api-data/initial-main-page-data.json'
 
 // Async thunks
