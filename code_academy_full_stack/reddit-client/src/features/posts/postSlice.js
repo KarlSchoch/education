@@ -60,7 +60,9 @@ const postSlice = createSlice({
             })
             .addCase(fetchPostDetails.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                const parsedComments = fetchPostDetails(action.payload)
+                const parsedComments = parseRedditComments(action.payload);
+                const postId = Object.keys(parsedComments)[0]
+                state.posts[postId].metadata.comments = parsedComments[postId];
                 state.error = null;
             })
             .addCase(fetchPosts.rejected, (state, action) => {
