@@ -3,13 +3,18 @@ import { screen } from "@testing-library/react";
 import { renderWithReduxAndRouter } from '../../../test-utils';
 
 describe('PostDetails', () => {
+    const originalFetch = global.fetch
     afterEach(() => {
         jest.restoreAllMocks();
+        global.fetch = originalFetch;
     });
     
     it('Includes error message if unable to ', async () => {
         // Setup
-        jest.spyOn(global, 'fetch').mockRejectedValueOnce(new Error('Network down'));
+        jest.spyOn(global, 'fetch').mockImplementation((...args) => {
+            console.log('FETCH called with:', ...args);
+            return Promise.reject(new Error('Network down'));
+        });
 
         // Exercise
         renderWithReduxAndRouter('/post/1m2adlq');
