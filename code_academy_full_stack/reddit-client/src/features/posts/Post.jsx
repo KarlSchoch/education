@@ -15,13 +15,6 @@ import {
 const Post = ({ postId, mainPage }) => {
     const dispatch = useDispatch();
 
-    const upVoteCt = useSelector(selectUpVoteCt(postId));
-    const downVoteCt = useSelector(selectDownVoteCt(postId));
-    const commentCt = useSelector(selectCommentCt(postId));
-    const title = useSelector(selectTitle(postId));
-    const subreddit = useSelector(selectSubreddit(postId));
-    const status = useSelector(selectStatus)
-    
     useEffect(() => {
         if (postId && subreddit && !mainPage) {
             dispatch(
@@ -37,6 +30,12 @@ const Post = ({ postId, mainPage }) => {
     //  img
     //  timePosted
     //  user
+    const upVoteCt = useSelector(selectUpVoteCt(postId));
+    const downVoteCt = useSelector(selectDownVoteCt(postId));
+    const commentCt = useSelector(selectCommentCt(postId));
+    const title = useSelector(selectTitle(postId));
+    const subreddit = useSelector(selectSubreddit(postId));
+    const status = useSelector(selectStatus)
 
     return (
         <div className='post'>
@@ -55,7 +54,7 @@ const Post = ({ postId, mainPage }) => {
                     Oops!  We are not displaying comments becuase we couldn't fetch  them from the server.
                 </div>
             )}
-            {!mainPage && <CommentList />}
+            {!mainPage && status === 'succeeded' && <CommentList />}
         </div>
     );
 };

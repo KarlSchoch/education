@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { renderWithReduxAndRouter } from '../../../test-utils';
 
 describe('PostDetails', () => {
@@ -19,7 +19,12 @@ describe('PostDetails', () => {
         renderWithReduxAndRouter('/post/1m2adlq');
 
         // Verify
+        // 1. Warning is present
         expect(await screen.findByTestId('comment-fetch-warning')).toBeInTheDocument()
+        // 2. No comments are present
+        await waitFor(() => {
+            expect( screen.queryByTestId('comment-class') ).not.toBeInTheDocument();
+        }, {timeout: 3000})
 
         // Teardown
     })
@@ -33,7 +38,8 @@ describe('PostDetails', () => {
     //     })
 
     //     // Verify
-    //     // 1. 
+    //     // 1. Fetch warning is not there
+    //     // 2. Comments are present
 
     //     // Teardown
     // })
