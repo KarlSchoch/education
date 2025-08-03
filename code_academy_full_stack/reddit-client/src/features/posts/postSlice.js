@@ -16,7 +16,7 @@ export const fetchPosts = createAsyncThunk(
 export const fetchPostDetails = createAsyncThunk(
     'posts/fetchPostDetails',
     async ({postId, subreddit}, thunkAPI) => {
-        const url = `/api/reddit/r/${subreddit}/comments/${postId}.json`;
+        const url = `/api/reddit/${subreddit}/comments/${postId}.json`;
         const response = await fetch(url);
         if (!response.ok) throw new Error('Failed to fetch post details');
         return await response.json();

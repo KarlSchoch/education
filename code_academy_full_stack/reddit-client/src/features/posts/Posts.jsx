@@ -8,24 +8,28 @@ const Posts = () => {
     const [userWarning, setUserWarning] = useState(false);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchPosts())
-            .unwrap()
-            .catch(() => setUserWarning(true));
-        fetchPosts();
-    }, [dispatch])
-
-    // Define parameters for rendering post content
-    let idList;
     let mainPage = false;
-    // Attempt to pull the postId out of the params
-    let { id } = useParams();
-    idList = [id]
-    // If id is null, because we are on the main page, create the list based on the state
+    let idList;
+
+    const { id } = useParams();
+    const idListFromStore = useSelector(selectPostIds);
+
     if (!id) {
-        idList = useSelector(selectPostIds)
         mainPage = true;
+        idList = idListFromStore;
+    }  else {
+        idList = [id]
     }
+
+    useEffect(() => {
+        if (mainPage) {
+            dispatch(fetchPosts())
+                .unwrap()
+                .catch(() => setUserWarning(true));
+        }
+        
+    }, [dispatch, mainPage])
+    
     
     return (
         <div className='posts'>

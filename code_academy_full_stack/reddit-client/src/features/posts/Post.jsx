@@ -21,12 +21,14 @@ const Post = ({ postId, mainPage }) => {
     const title = useSelector(selectTitle(postId));
     const subreddit = useSelector(selectSubreddit(postId));
     const status = useSelector(selectStatus)
-
-    console.log("subreddit", subreddit);
-    console.log("postId", postId);
     
     useEffect(() => {
-        dispatch(fetchPostDetails(postId, subreddit))
+        if (postId && subreddit && !mainPage) {
+            dispatch(
+                fetchPostDetails({ postId: postId, subreddit: subreddit })
+            );
+        }
+        
     }, [dispatch, postId, subreddit])
     // useEffect()
     // add selectors for the following

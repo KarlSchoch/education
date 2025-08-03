@@ -12,7 +12,6 @@ describe('PostDetails', () => {
     it('Includes error message if unable to ', async () => {
         // Setup
         jest.spyOn(global, 'fetch').mockImplementation((...args) => {
-            console.log('FETCH called with:', ...args);
             return Promise.reject(new Error('Network down'));
         });
 
