@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { screen, waitFor } from "@testing-library/react";
 import { renderWithReduxAndRouter } from '../../../test-utils';
+import sampleSinglePageJSON from '../../assets/api-data/sample-single-page-data.json'
 
 describe('PostDetails', () => {
     const originalFetch = global.fetch
@@ -29,18 +30,37 @@ describe('PostDetails', () => {
         // Teardown
     })
 
-    // it('Renders PostDetails component with successful API Call ', async () => {
-    //     // Setup
+    it('Renders PostDetails component with successful API Call ', async () => {
+        // Setup
+        global.fetch = jest.fn((url) => {
+            if (url.includes('/api/reddit/r/tragedeigh/comments/1m2adlq.json')) {
+                return Promise.resolve({
+                    ok: true,
+                    status: 200, 
+                    headers: {
+                        get: () => 'application/json',
+                    },
+                    json: () => Promise.resolve(sampleSinglePageJSON),
+                    text: () => Promise.resolve(JSON.stringify(sampleSinglePageJSON)),
+                })
+            }
 
-    //     // Exercise
-    //     await React.act(async () => {
-    //         renderWithReduxAndRouter('/post/1m2adlq');
-    //     })
+            console.log("Encountered unexpected URL", url)
+        })
 
-    //     // Verify
-    //     // 1. Fetch warning is not there
-    //     // 2. Comments are present
+        // Exercise
+        await React.act(async () => {
+            renderWithReduxAndRouter('/post/1m2adlq');
+        })
 
-    //     // Teardown
-    // })
+        // Verify
+        // 1. Fetch warning is not there
+        await waitFor(() => {
+            expect( screen.queryByTestId('comment-fetch-warning') ).not.toBeInTheDocument();
+        }, {timeout: 3000})
+
+        // 2. Comments are present
+
+        // Teardown
+    })
 })
