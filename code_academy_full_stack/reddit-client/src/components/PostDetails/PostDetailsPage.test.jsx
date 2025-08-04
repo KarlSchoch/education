@@ -44,7 +44,6 @@ describe('PostDetails', () => {
                     text: () => Promise.resolve(JSON.stringify(sampleSinglePageJSON)),
                 })
             }
-
             console.log("Encountered unexpected URL", url)
         })
 
@@ -54,12 +53,12 @@ describe('PostDetails', () => {
         })
 
         // Verify
-        // 1. Fetch warning is not there
         await waitFor(() => {
+            // 1. Fetch warning is not there
             expect( screen.queryByTestId('comment-fetch-warning') ).not.toBeInTheDocument();
+            // 2. Comments are present
+            expect( screen.queryAllByTestId('comment-class') ).not.toHaveLength(0);
         }, {timeout: 3000})
-
-        // 2. Comments are present
 
         // Teardown
     })

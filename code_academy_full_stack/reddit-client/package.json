@@ -41,6 +41,7 @@
     "globals": "^16.3.0",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
+    "redux-mock-store": "^1.5.5",
     "vite": "^7.0.4",
     "vite-node": "^3.2.4",
     "whatwg-fetch": "^3.6.20"

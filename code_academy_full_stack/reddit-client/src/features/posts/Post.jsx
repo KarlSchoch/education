@@ -14,6 +14,7 @@ import {
 
 const Post = ({ postId, mainPage }) => {
     const dispatch = useDispatch();
+    const subreddit = useSelector(selectSubreddit(postId));
 
     useEffect(() => {
         if (postId && subreddit && !mainPage) {
@@ -34,8 +35,7 @@ const Post = ({ postId, mainPage }) => {
     const downVoteCt = useSelector(selectDownVoteCt(postId));
     const commentCt = useSelector(selectCommentCt(postId));
     const title = useSelector(selectTitle(postId));
-    const subreddit = useSelector(selectSubreddit(postId));
-    const status = useSelector(selectStatus)
+    const status = useSelector(selectStatus);
 
     return (
         <div className='post'>

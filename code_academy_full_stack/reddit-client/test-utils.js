@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router';
 import store from './src/app/store';
 import AppRoutes from './src/app/AppRoutes';
 
-export const renderWithReduxAndRouter = (route= '/') => {
+export const renderWithReduxAndRouter = (route='/') => {
   render(
     <Provider store={store}>
       <MemoryRouter initialEntries={[route]}>

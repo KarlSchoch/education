@@ -61,7 +61,7 @@ const postSlice = createSlice({
             .addCase(fetchPostDetails.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 const parsedComments = parseRedditComments(action.payload);
-                const postId = Object.keys(parsedComments)[0]
+                const postId = Object.keys(parsedComments)[0];
                 state.posts[postId].metadata.comments = parsedComments[postId];
                 state.error = null;
             })
@@ -81,7 +81,8 @@ export const selectDownVoteCt = (postId) => (state) => state.posts.posts[postId]
 export const selectCommentCt = (postId) => (state) => state.posts.posts[postId].metadata.commentCt;
 export const selectTitle = (postId) => (state) => state.posts.posts[postId].title;
 export const selectSubreddit = (postId) => (state) => state.posts.posts[postId].subreddit;
-export const selectStatus = state => state.status;
+export const selectComments = (postId) => (state) => state.posts.posts[postId].metadata.comments;
+export const selectStatus = state => state.posts.status;
 export const selectPostIds = createSelector(
     [(state) => state.posts.posts],
     (posts) => Object.keys(posts || {})
