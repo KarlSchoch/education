@@ -7,16 +7,29 @@ import { selectComments } from '../posts/postSlice'
 const CommentList = () => {
 
     const { id } = useParams();
-    console.log('id', id)
     const commentList = useSelector(selectComments(id));
-    console.log('commentList', commentList)
 
     return (
-        <div className='comment-list'>
-            { }
-            <Comment />
-            <Comment />
-        </div>
+        commentList?.length > 0 ? (
+            <div className='comment-list'>
+                {
+                    commentList.map((comment, idx) => {
+                        return (
+                            <Comment 
+                                timestamp={comment.timestamp} 
+                                user={comment.user}
+                                text={comment.text}
+                                key={idx}
+                            />
+                        )
+                    })
+                }
+            </div>
+        ) : (
+            <div data-testid='no-content-warning' className='no-content-warning'>
+                No comments found for this post.
+            </div>
+        )
     );
 };
 

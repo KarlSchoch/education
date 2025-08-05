@@ -59,7 +59,7 @@ describe('PostDetails', () => {
             // 2. Comments are present
             expect( screen.queryAllByTestId('comment-class') ).not.toHaveLength(0);
         }, {timeout: 3000})
-
+        
         // Teardown
     })
 })

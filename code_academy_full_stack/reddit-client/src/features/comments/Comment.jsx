@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Comment = () => {
+const Comment = ({ timestamp, user, text }) => {
     return (
         <div className='comment' data-testid='comment-class'>
-            Comment's Time and <span className='user'>user</span>
+            Comment's {timestamp} and <span className='user'>{user}</span>
             <br />
-            Comment text
+            Comment {text}
         </div>
     );
 };
