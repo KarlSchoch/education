@@ -2,6 +2,7 @@ import * as React from 'react';
 import { screen, waitFor } from "@testing-library/react";
 import { renderWithReduxAndRouter } from '../../../test-utils';
 import sampleSinglePageJSON from '../../assets/api-data/sample-single-page-data.json'
+import successSinglePageJSON from '../../assets/api-data/success-single-page-data.json'
 
 describe('PostDetails', () => {
     const originalFetch = global.fetch
@@ -30,7 +31,7 @@ describe('PostDetails', () => {
         // Teardown
     })
 
-    it('Renders PostDetails component with successful API Call ', async () => {
+    it('Renders PostDetails component with successful API Call', async () => {
         // Setup
         global.fetch = jest.fn((url) => {
             if (url.includes('/api/reddit/r/tragedeigh/comments/1m2adlq.json')) {
@@ -40,17 +41,18 @@ describe('PostDetails', () => {
                     headers: {
                         get: () => 'application/json',
                     },
-                    json: () => Promise.resolve(sampleSinglePageJSON),
-                    text: () => Promise.resolve(JSON.stringify(sampleSinglePageJSON)),
+                    json: () => Promise.resolve(successSinglePageJSON),
+                    text: () => Promise.resolve(JSON.stringify(successSinglePageJSON)),
                 })
             }
             console.log("Encountered unexpected URL", url)
         })
 
         // Exercise
-        await React.act(async () => {
-            renderWithReduxAndRouter('/post/1m2adlq');
-        })
+        // await React.act(async () => {
+        //     renderWithReduxAndRouter('/post/1m2adlq');
+        // })
+        renderWithReduxAndRouter('/post/1m2adlq');
 
         // Verify
         await waitFor(() => {
@@ -59,7 +61,7 @@ describe('PostDetails', () => {
             // 2. Comments are present
             expect( screen.queryAllByTestId('comment-class') ).not.toHaveLength(0);
         }, {timeout: 3000})
-        
+
         // Teardown
     })
 })
