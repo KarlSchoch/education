@@ -168,3 +168,14 @@ None
 1. Create async thunk for pulling in the data related to a post
 2. Create function for prasing posts out of the
 3. Create warning element that populates based on the error status
+
+# Search Functionality
+
+- Search Bar
+    - just test that this calls the event handler function and text gets cleared
+- Banner
+    - Basically just functions to pass through the event handler
+- MainPage
+    - Search handler function (i.e. API call) is defined and managed here (this component "knows what to do" with search)
+    - This is where the integration testing happens
+    - Searching Posts (i.e. logic for making the API call) will be handled within the slice
