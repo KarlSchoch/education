@@ -12,4 +12,15 @@ describe('MainPage', () => {
           renderWithReduxAndRouter('/');
         })
     })
+
+    it('Updates posts shown based on a user query', async () => {
+        const exampleJson = {
+            "data": {
+                "children": {
+                    "kind": "t3",
+                    "data": {}
+                }
+            }
+        }
+    })
 })
