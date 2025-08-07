@@ -13,15 +13,15 @@ describe('Search Bar', () => {
         
         // Exercise
         // Simulate user typing a search term and clicking submit
-        // fireEvent.change(input, {target: {value: 'Celtics'}})
-        // expect(input.value).toBe('Celtics');
-        // fireEvent.click(button)
+        fireEvent.change(input, {target: {value: 'Celtics'}})
+        expect(input.value).toBe('Celtics');
+        fireEvent.click(button)
 
 
         // Verify
         // On submit, handler gets called with the input text and the input box gets cleared
-        // expect(handleSubmit).toHaveBeenCalledWith('hello');
-        // expect(input.value).toBe('');
+        expect(handleSubmit).toHaveBeenCalledWith('Celtics');
+        expect(input.value).toBe('');
         
         // Teardown
     })
