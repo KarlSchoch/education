@@ -1483,3 +1483,41 @@ _NOTE_ As I'm going through this, I am seeing that you get the following progres
         - Similarly for useDispatch, you pass it the **INVOKED ACTION** (i.e. `useDispatch(action())` rather than `useDispatch(action)`), constructing the payload as necessary.
 
 ## Git and GitHub Pt. II
+
+# Backend
+## Node.js Essentials
+- Error module
+    - Node.js uses error-first callback functions (error is the first expected argument)
+    ```js
+    const errorFirstCallback = (err, data) => {
+        if (err) {
+            // Log the error
+        } else {
+            // do the normal stuff
+        }
+    }
+    ```
+    - need to do this because of asynchronous code.  In asynchronous code, you have already moved past the try-catch convention once the error returns
+    - In the situation where you call the API with some data and provide an error first callback function that has some error handling logic, you are ensuring that you don't move past the error execution
+- Buffer Module
+    - array of integers where each element represents a byte of data.  Cant be resized
+    - Methods
+        - .alloc(size, fill=0, encoding='utf-8'): Creates new buffer object
+        - .toString(encoding='utf-8', start=0, end): translate to human readable string
+        - .from(Object, encoding, ): create new buffer from string, array, or object
+        - .contact(arry:Buffer, length): Join multiple buffer objects into a single Buffer objet
+- FS Module
+    - requires using an error-first callback function
+    - Needs to be imported
+    - Sample Code: `fs.readFile('/some-path/file.txt', encoding, errorFirstCallbackFunction)`
+- Streams
+    - Readable 
+        1. Set up the interface
+            - `const interface = readline.createInterface()`  (returns an EventEmitter set up to emit line events)
+            - Within the create interface, pass an object with an input argument that relates to a filename `{input: fs.createReadStream('somefile.txt')}`
+            - This reads the file in
+        2. create a callback function (can be done inline)
+        3. Set up the interface you created in the first step to 
+            `interface.on('line', callbackFunc)`
+    - Writeable
+        

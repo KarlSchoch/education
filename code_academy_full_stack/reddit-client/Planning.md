@@ -171,11 +171,15 @@ None
 
 # Search Functionality
 
-- Search Bar
-    - just test that this calls the event handler function and text gets cleared
+- [x] Search Bar
+    - [x] just test that this calls the event handler function and text gets cleared
 - Banner
     - Basically just functions to pass through the event handler
 - MainPage
-    - Search handler function (i.e. API call) is defined and managed here (this component "knows what to do" with search)
-    - This is where the integration testing happens
-    - Searching Posts (i.e. logic for making the API call) will be handled within the slice
+    - Test
+        - [x] Mock Search function.  Include error logic if you encounter another API
+        - [x] Create a good, minimal representation of a search query response
+    - Application Logic
+        - Search handler function (i.e. API call) is defined and managed here (this component "knows what to do" with search)
+        - This is where the integration testing happens
+        - Searching Posts (i.e. logic for making the API call) will be handled within the slice
