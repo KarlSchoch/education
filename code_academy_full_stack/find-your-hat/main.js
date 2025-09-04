@@ -99,3 +99,20 @@ class Field {
 module.exports = { Field }
 
 // Instantiate an object
+const field = new Field([
+    ['*', '░', 'O'],
+    ['░', 'O', '░'],
+    ['░', '^', '░'],
+]);
+
+while (field.continueGame) {
+    field.print();
+    field.promptUser();
+    field.updateState();
+}
+
+if (field.endGameReason === 'found the hat!!!') {
+    console.log(`Congrats! You ${field.endGameReason}`)
+} else {
+    console.log(`Oooh nooo! You ${field.endGameReason} Try again, I'm sure you'll have better luck next time`)
+}
