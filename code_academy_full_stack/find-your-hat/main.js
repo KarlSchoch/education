@@ -7,13 +7,70 @@ const fieldCharacter = '░';
 const pathCharacter = '*';
 
 class Field {
-    constructor(initialState, userRow = 0, userCol = 0) {
-        this.currentField = initialState
+    constructor(
+        userRow = 0, userCol = 0, nrows=3, ncols=3, percentageHoles=0.25, initialState=null
+    ) {
+        if (!initialState) {
+            this.currentField = Field.generateField(
+                userRow, userCol, nrows, ncols, percentageHoles
+            )
+        } else {
+            this.currentField = initialState
+        }
+        
         this.userChoice = null // Store user's move
         this.userRow = userRow
         this.userCol = userCol
         this.continueGame = true
         this.endGameReason = null
+    }
+
+    // Static methods
+    static generateField(userRow=0, userCol=0, nrows=3, ncols=3, percentageHoles=0.25) {
+        // Create the baseline field
+        const field = []
+        for (let i = 0; i < nrows; i++) {
+            field.push([]);
+            for (let j = 0; j < ncols; j++) {
+                field[i].push(fieldCharacter)
+            }
+        }
+
+        // Place the user
+        field[userRow][userCol] = pathCharacter
+
+        // Place the hat
+        let hatRow, hatCol;
+        do {
+            hatRow = Math.floor(Math.random() * nrows);
+            hatCol = Math.floor(Math.random() * ncols);
+        } while (hatRow === userRow && hatCol === userCol);
+        field[hatRow][hatCol] = hat
+
+        // Place the holes
+        // ID Number of holes
+        const nholes = Math.max(
+            1,
+            Math.floor((nrows * ncols - 1) * percentageHoles)
+        )
+        // Iterate until you have placed nholes, randomly selecting hole locations
+        let i = 0;
+        let holeRow;
+        let holeCol;
+        while (i < nholes) {
+            // Generate a random location for the hole
+            holeRow = Math.floor(Math.random() * nrows)
+            holeCol = Math.floor(Math.random() * ncols)
+            // Validate that you aren't overriding the hat or the user location
+            if (
+                field[holeRow][holeCol] !== hat && field[holeRow][holeCol] !== pathCharacter
+            ) {
+                field[holeRow][holeCol] = hole
+                i++
+            }
+        }
+
+        return field
     }
 
     // Method
@@ -98,12 +155,15 @@ class Field {
 
 module.exports = { Field }
 
+// Field.generateField()
+
 // Instantiate an object
-const field = new Field([
-    ['*', '░', 'O'],
-    ['░', 'O', '░'],
-    ['░', '^', '░'],
-]);
+// const field = new Field([
+//     ['*', '░', 'O'],
+//     ['░', 'O', '░'],
+//     ['░', '^', '░'],
+// ]);
+const field = new Field();
 
 while (field.continueGame) {
     field.print();
