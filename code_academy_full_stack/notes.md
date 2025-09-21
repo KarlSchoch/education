@@ -1521,3 +1521,62 @@ _NOTE_ As I'm going through this, I am seeing that you get the following progres
             `interface.on('line', callbackFunc)`
     - Writeable
         
+## Express JS
+- Documentation
+    - [Routing](https://expressjs.com/en/guide/routing.html)
+- Sending responses
+```js
+// app.js
+const express = require('express');
+const app = express();
+// Other methods: app.put(), app.post(), and app.delete()
+app.get('/expressions/:id', (req, res, next) => {
+  const foundExpression = getElementById(req.params.id, expressions);
+  if (foundExpression) {
+    res.send(foundExpression);
+  } else {
+    res.status(404).send('Expression not found');
+  }
+});
+module.exports = { app };
+
+// main.js
+const { app } = require("./app.js");
+const PORT = process.env.PORT || 4001;
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
+```
+
+- Sending put request where list of countries are passed
+```js
+app.put('/currencies/:name/countries', function (req, res) {
+
+  const currencyName = req.params.name;
+
+  if (currencies.hasOwnProperty(currencyName)) {
+    currencies[currencyName] = req.query;
+    res.send(currencies[currencyName]);
+  } else {
+    res.status(404).send();
+  }
+
+})
+```
+
+- Structuring Express Application
+    - Organizing your different routes under a specific route using `express.Router()`.  These separate routers can be broken down into separate files.
+        ```js
+        const expressionsRouter = express.Router();
+        const animalsRouter = express.Router();
+
+        // app.use() is housed within the main application
+        app.use('/expressions', expressionsRouter);
+        app.use('/animals', animalsRouter);
+
+        expressionsRouter.get('/', (req, res, next) => { ... })
+        animalsRouter.get('/', (req, res, next) => { ... })
+
+        module.exports = expressionsRouter;
+        module.exports = animalsRouter;
+        ```
