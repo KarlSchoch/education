@@ -30,6 +30,22 @@ app.get('/api/quotes', (req, res, next) => {
 
 })
 
+
+// The API should have a POST /api/quotes route for adding new quotes to the data. 
+// New quotes will be passed in a query string with two properties: quote with the quote text itself, 
+// and person with the person who is credited with saying the quote.
+
+// This route should verify that both properties exist in the request query string and send a 400 response if it does not.
+// If all is well, this route handler should add the new quote object to the data array and send back a response with the following shape:
+// {
+//   quote: {/* new quote object */}
+// }
+
+app.post('/api/quotes', (req, res, next) => {
+  const queryParams = req.query;
+  console.log("queryParams", queryParams);
+});
+
 // export app for use in main.js and for testing
 module.exports = {
   app
