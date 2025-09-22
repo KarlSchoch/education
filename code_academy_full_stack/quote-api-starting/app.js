@@ -16,18 +16,16 @@ app.get('/api/quotes/random', (req, res, next) => {
 })
 app.get('/api/quotes', (req, res, next) => {
 
-  const queryParams = req.query
-  console.log(queryParams);
+  // Extract the params
+  const queryParams = req.query;
 
-  // need to check if there is a person param passed in or if there no params
   // If there are no params, return all the quotes
-  // If there is a person param, Check to see if the person exists
-    // If they exist, send back there results
-    // If not, send back an empty array
-  if (!req.params) {
-
+  if (Object.keys(queryParams).length === 0) {
+    res.send(quotes)
+  // If there are params, filer to that persons quotes (will return empty array if they don't have quotes)
   } else {
-    console.log('No params');
+    const personQuotes = quotes.filter(el => el.person === queryParams.person)
+    res.send(personQuotes);
   }
 
 })
