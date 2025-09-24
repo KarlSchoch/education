@@ -1580,3 +1580,10 @@ app.put('/currencies/:name/countries', function (req, res) {
         module.exports = expressionsRouter;
         module.exports = animalsRouter;
         ```
+
+### Middleware
+- Code that executes between server receiving a request and sending a response
+- Every Express route is middleware
+- `app.use(/route)` where you define middleware to happen on a given route builds on itself.  `app.use(/route/:id)` will use all middleware aligned to `/route`
+- `next()`: passes along to the next middleware element.  Although it is repetitive to call it explicitly rather than having an automated handoff to the next piece of middleware in the line, it is useful because there are times when you don't want to do that handoff (i.e. user does not have the correct permissions, so you have an if statement checking the permissions with a return before reaching the next if they don't)
+- you can use define dfunctions as middleware and the various calls off `app` (`.use()`, `.get()`, `.post()`, etc.), so that means that you can create reusable capabilities like logging and add them to multiple locations for middleware
