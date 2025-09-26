@@ -1587,3 +1587,55 @@ app.put('/currencies/:name/countries', function (req, res) {
 - `app.use(/route)` where you define middleware to happen on a given route builds on itself.  `app.use(/route/:id)` will use all middleware aligned to `/route`
 - `next()`: passes along to the next middleware element.  Although it is repetitive to call it explicitly rather than having an automated handoff to the next piece of middleware in the line, it is useful because there are times when you don't want to do that handoff (i.e. user does not have the correct permissions, so you have an if statement checking the permissions with a return before reaching the next if they don't)
 - you can use define dfunctions as middleware and the various calls off `app` (`.use()`, `.get()`, `.post()`, etc.), so that means that you can create reusable capabilities like logging and add them to multiple locations for middleware
+- Open Source Middleware
+    - Logging (example with Morgan)
+        ```js
+        const morgan = require('morgan');
+        const { createWriteStream } = require('fs');
+
+        app.use(
+            morgan(
+                'tiny',
+                { stream: createWriteStream('./app.log', { flags: 'a' }) }
+            )
+        );
+        ```
+    - Body Parsing ([body-parser](https://github.com/expressjs/body-parser#api))
+        - `app.use(bodyParser.json()); # Can use multiple different methods` 
+        - Functionality of body-parser Happens behind the scenes and automatically attaches a parsed body object to `req.body`
+    - Error handling
+        - Custom Built
+            ```js
+            \\ 1. Defining the Error handling function
+            app.use((err, req, res, next) => {
+                if (!err.status) {
+                    err.status = 500
+                }
+                res.status(err.status).send(err.message);
+            })
+            \\ 2. Usage
+            if (<some-error-condition>) {
+                const newError = new Error("<Error Message>");
+                newError.status = <Error Status Code>;
+                return next(newError);
+            }
+            ```
+        - Package
+            ```js
+            const errorhandler = require(`errorhandler`);
+
+            app.use(errorhandler());
+            ```
+- Summary of process
+    ```js
+    app.use('/some/:path', (req, res, next) => { // Match to target location done through path/list of paths; also can be a function and placed as a callback
+        // Define the middleware's functionality
+        next(); // invoked to pass control to the next step
+    });
+
+    app.use('/some/different/:path', someMiddlewareFunction, (req, res, next) => { 
+        // Middleware associated with the path, either explicitly as a function or , will happen based on the top down order that things are defined in
+     })
+    ```
+- Router Parameters
+    - 
