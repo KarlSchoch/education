@@ -1638,4 +1638,32 @@ app.put('/currencies/:name/countries', function (req, res) {
      })
     ```
 - Router Parameters
-    - 
+    - `app.param()`
+    - Used to handle all routes with a given parameter
+    - There can be nesting through the `.router({ mergeParams: true})` capability
+    - General Process
+        ```js
+        // 1. Middleware executed top to bottom, so put the params at the top so that you have access to the output of these operations through the rest of the script
+        app.params('some-param', (req, res, next, paramVal) => {
+            // 2. Do some transformation to the value
+            // 3. Add some error checking in to ensure that the param value is valid
+            if (invalidParamVal) {
+                res.status(400).send();
+            } else {
+                req.param = transformedValue;
+                next(); // 4. Pass control onto the next step in the process
+            }
+        })
+        ```
+### Preventing Cross-site Scripting
+- CORS
+    - An origin is the combination of protocol (http://), host (www.example.com), and port (default is 80) - http://example.com
+    - Cross Origin Resource Sharing is the process of defining how resources can be shared across those origins
+        - If you did not allow sharing between different origins, you could never have anything like a CDN
+        - If you blindely allowed sharing, you could easily allow people to delete records on the database
+    - With CORS, you can specify what origins can do what actions
+    - This is achieved by the following
+        - Adds a number of different headers, but the most relevant is `Access-Control-Allow-Origin` (full documentation [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers#CORS))
+        - This header specifies which domains are allowed
+        - Also need to specify the methods (i.e. PUT, POST, DELETE) that are allowed, since GET is generally the only one allowed by default.  
+        - Whether the action is allowed is validated by the client via a "preflight check" (something done before sending the full HTTP request) where the client defines the OPTIONS header where you specify the `Access-Control-Request-Method` value
